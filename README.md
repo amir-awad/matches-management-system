@@ -1,6 +1,6 @@
 # matches-management-system
 
-- This is a simple web application for managing matches. It is built using Node.js, Express.js, and SQL server.
+- This is a web application for managing matches. It is built using Node.js, Express.js, and SQL server.
 - We used docker to run the application.
 
 ## Installation
