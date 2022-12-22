@@ -30,3 +30,8 @@ sudo docker-compose up --build
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## Contributers
+
+- [Amir Tarek](https://github.com/amir-awad)
+- [Ahmed Wael](https://github.com/ahmedwael216)
