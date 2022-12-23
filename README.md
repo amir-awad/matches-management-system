@@ -13,7 +13,8 @@
 - First, copy the sql file to the database container by running the following command:
 
 ```bash
-sudo docker cp ./database.sql matches-management-system_db_1:/database.sql
+sudo docker cp ./database/tables.sql matches-management-system_db_1:tmp
+sudo docker cp ./database/procedures.sql matches-management-system_db_1:tmp
 ```
 
 - Then, enter the bash of the database container by running the following command:
