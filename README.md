@@ -10,7 +10,7 @@
 
 ## Usage
 
-- First, copy the sql file to the database container by running the following command:
+- Make sure you are in the project directory, then copy the sql files to the database container by running the following command:
 
 ```bash
 sudo docker cp ./database/tables.sql matches-management-system_db_1:tmp
