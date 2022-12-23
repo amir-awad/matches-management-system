@@ -7,21 +7,29 @@
 
 - You can install docker from [here](https://docs.docker.com/get-docker/).
 - To get the power of docker-compose, we split the application into two parts: the database and the application itself.
-- Before running the application, you need to create a separate container for SQL running server. Just follow the instructions described [here](https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-2017&preserve-view=true&pivots=cs1-bash)
 
 ## Usage
 
-- First, make sure that SQL server is running. You can check it by running the following command:
+- First, copy the sql file to the database container by running the following command:
 
 ```bash
-sudo docker ps -a
+sudo docker cp ./database.sql matches-management-system_db_1:/database.sql
 ```
 
-- You should see a container with status "Up".
+- Then, enter the bash of the database container by running the following command:
 
-- Also make sure that you have changed the configuration of your SQL server in both `docker-compose.yml` and `index.js` files.
+```bash
+sudo docker exec -it matches-management-system_db_1 bash
+```
 
-- Then, enjoy the application by running the following command:
+- Now, you can run the sql files by running the following commands:
+
+```bash
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Amir@1234567' -i /tmp/tables.sql
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Amir@1234567' -i /tmp/procedures.sql
+```
+
+- Enjoy the application by running the following command:
 
 ```bash
 sudo docker-compose up --build

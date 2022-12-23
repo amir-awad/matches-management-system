@@ -17,6 +17,6 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Amir@1234567
     ports:
-      - "5000:5000"
+      - "1433:1433"
     volumes:
       - ./db:/var/opt/mssql
