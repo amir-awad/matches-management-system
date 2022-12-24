@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fan Profile</title>
+  </head>
+  <body>
+    <h1>Welcome, <%= user.name %>!</h1>
+
+    <h2>Upcoming Matches</h2>
+    <ul>
+      <% locals.matches.forEach(function(match) { %> <% if (match.ticketsAvailable) {
+      %>
+      <li>
+        <%= match.homeTeam %> vs. <%= match.awayTeam %>
+        <form action="/purchase" method="post">
+          <input type="hidden" name="matchId" value="<%= match.id %>" />
+          <label for="ticketCount">Number of tickets:</label>
+          <input
+            type="number"
+            name="ticketCount"
+            min="1"
+            max="<%= match.ticketsAvailable %>"
+          />
+          <button type="submit">Purchase</button>
+        </form>
+      </li>
+      <% } else { %>
+      <li><%= match.homeTeam %> vs. <%= match.awayTeam %> (sold out)</li>
+      <% } %> <% }); %>
+    </ul>
+  </body>
+</html>
