@@ -10,6 +10,13 @@
 
 ## Usage
 
+- First, create .env file in the root directory of the project and add the following environment variables:
+
+```bash
+DB_USER_ADMIN = "sa"
+DB_PASS_ADMIN = "Amir@1234567"
+```
+
 - Make sure you are in the project directory, then copy the sql files to the database container by running the following command:
 
 ```bash
