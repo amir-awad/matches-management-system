@@ -79,7 +79,7 @@ app.locals = {
 
 const port = process.env.PORT || 8080;
 app.listen(
-  port,
+  port,'0.0.0.0',
   connect().then(() => {
     console.log(`Listening on port ${port}`);
 
