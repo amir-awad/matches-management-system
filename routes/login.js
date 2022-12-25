@@ -4,7 +4,8 @@ const { userLogin, userType } = require("../procedures/userProcedures");
 const { ROLE } = require("../utilities/auth");
 
 router.get("/", function (req, res, next) {
-  routeUser(req, res);
+  if (req.session.type != undefined) routeUser(req, res);
+  else login(req, res, req.query.username, req.query.password);
 });
 
 router.post("/", function (req, res) {
@@ -22,7 +23,10 @@ async function login(req, res, username, password) {
       userType(username).then((type) => {
         console.log(type, "type");
         req.session.type = type;
-        routeUser(req, res);
+        if (req.session.type != undefined) {
+          console.log(req.session.type, "req.session.type hereeee");
+          routeUser(req, res);
+        }
       });
     } else {
       res.render("login", {
@@ -41,6 +45,7 @@ async function login(req, res, username, password) {
 
 function routeUser(req, res) {
   console.log(req.session.type, "req.session.type");
+  console.log(req.session.type, "req.session.type.");
   switch (req.session.type.output.type) {
     case ROLE.FAN:
       res.redirect("/fan");
