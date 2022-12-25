@@ -14,6 +14,7 @@
 
 ```bash
 sudo docker cp ./database/tables.sql matches-management-system_db_1:tmp
+sudo docker cp ./database/insertion.sql matches-management-system_db_1:tmp
 sudo docker cp ./database/procedures.sql matches-management-system_db_1:tmp
 ```
 
@@ -27,8 +28,16 @@ sudo docker exec -it matches-management-system_db_1 bash
 
 ```bash
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Amir@1234567' -i /tmp/tables.sql
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Amir@1234567' -i /tmp/insertion.sql
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Amir@1234567' -i /tmp/procedures.sql
 ```
+
+- To enter the the sql cmd of the database container, run the following command:
+
+```bash
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Amir@1234567'
+```
+
 
 - Enjoy the application by running the following command:
 
