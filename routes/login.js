@@ -5,7 +5,7 @@ const { ROLE } = require("../utilities/auth");
 
 router.get("/", function (req, res, next) {
   if (req.session.type != undefined) routeUser(req, res);
-  else login(req, res, req.query.username, req.query.password);
+  else res.render("login", { title: "Login", error: "" });
 });
 
 router.post("/", function (req, res) {

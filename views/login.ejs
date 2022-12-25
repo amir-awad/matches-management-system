@@ -24,4 +24,10 @@
   <input type="submit" class="btn btn-primary" value="Sign in" />
   <!-- let the user to register if he doesn't have an account -->
   <a href="/register">Don't have an account? register, now! </a>
+  <% if(error) { %>
+  <script>
+    alert("Wrong username or password");
+    error = false;
+  </script>
+  <% } %>
 </form>

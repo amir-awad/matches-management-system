@@ -14,28 +14,6 @@
 
     <hr>
 
-
-    <!-- <ul>
-      <% matches.forEach(function(match) { %>
-      <li>
-        <%= match.HostClub %> vs. <%= match.GuestClub %>
-        <form action="/fan/purchaseTicket" method="post">
-          <input
-            type="hidden"
-            name="host_club_name"
-            value="<%= match.HostClub %>"
-          />
-          <input
-            type="hidden"
-            name="guest_club_name"
-            value="<%= match.GuestClub %>"
-          />
-          <input type="hidden" name="start" value="<%= match.start_time %>" />
-          <button type="submit">Purchase ticket</button>
-        </form>
-      </li>
-      <% }); %>
-    </ul> -->
     <form action="/logout" method="get">
       <button type="submit">Logout</button>
   </body>
