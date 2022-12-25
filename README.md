@@ -38,7 +38,6 @@ sudo docker exec -it matches-management-system_db_1 bash
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Amir@1234567'
 ```
 
-
 - Enjoy the application by running the following command:
 
 ```bash
