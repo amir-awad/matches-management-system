@@ -30,13 +30,20 @@ GO
 CREATE PROCEDURE FanViewMatchesWithAvailableTicketsStartingGivenDate
     @date datetime
 AS
-SELECT *
-FROM match
-WHERE match.start_time >= @date
-    AND match.match_id IN (SELECT match_id
+SELECT C1.club_name AS HostClub, C2.club_name AS GuestClub, S.stadium_name, S.stadium_location, M.start_time
+FROM match M
+    JOIN club C1 ON M.host_club_id = C1.club_id
+    JOIN club C2 ON M.guest_club_id = C2.club_id
+    JOIN stadium S ON M.stadium_id = S.stadium_id
+WHERE M.start_time >= @date
+    AND M.match_id IN (SELECT match_id
     FROM ticket
     WHERE ticket_status = 1)
 GO
+
+
+
+
 
 CREATE PROCEDURE clubfinder
     @club_name varchar(20),
@@ -95,6 +102,18 @@ begin
 set ticket_status = 0 where ticket_id = @t_id
 end
 go
+
+
+CREATE PROCEDURE FanNationalIdFinder
+    @username varchar(20),
+    @national_id varchar(20) output
+AS
+select @national_id = fan.national_id
+from fan
+where @username = fan.username
+go
+
+
 
 CREATE PROCEDURE StadiumManagerRegister
     @name varchar(20),

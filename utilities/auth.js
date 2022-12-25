@@ -1,11 +1,11 @@
 const { StatusCodes } = require("http-status-codes");
 
 const ROLE = {
-  SYSTEM_ADMIN: "0",
-  FAN: "1",
-  STADIUM_MANAGER: "2",
-  CLUB_REPRESENTATIVE: "3",
-  SPORTS_ASSOCIATION_MANAGER: "4",
+  SYSTEM_ADMIN: 0,
+  FAN: 1,
+  STADIUM_MANAGER: 2,
+  CLUB_REPRESENTATIVE: 3,
+  SPORTS_ASSOCIATION_MANAGER: 4,
 };
 
 const authUser = function (req, res, next) {
@@ -19,7 +19,7 @@ const authUser = function (req, res, next) {
 
 const authRole = function (roles) {
   return (req, res, next) => {
-    if (roles.includes(req.session.type)) {
+    if (roles.includes(req.session.type.output.type)) {
       next();
     } else {
       res.status(StatusCodes.UNAUTHORIZED).render("error", {

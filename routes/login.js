@@ -40,8 +40,8 @@ async function login(req, res, username, password) {
 }
 
 function routeUser(req, res) {
-  console.log(req.session.type, "req.session.type")
-  switch (req.session.type) {
+  console.log(req.session.type, "req.session.type");
+  switch (req.session.type.output.type) {
     case ROLE.FAN:
       res.redirect("/fan");
       break;

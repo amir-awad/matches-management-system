@@ -22,11 +22,13 @@ const fanRegister = async (
 };
 
 const fanViewMatchesWithAvailableTicketsStartingGivenDate = async (date) => {
+  console.log("here");
   const request = new sql.Request();
   request.input("date", sql.VarChar, date);
   const result = await request.execute(
     "FanViewMatchesWithAvailableTicketsStartingGivenDate",
   );
+  console.log(result);
   return result;
 };
 
@@ -40,8 +42,17 @@ const fanPurchaseTicket = async (
   request.input("national_id", sql.VarChar, nationalId);
   request.input("host_club", sql.VarChar, host_club_name);
   request.input("guest_club", sql.VarChar, guest_club_name);
-  request.input("start", sql.VarChar, start);
+  request.input("start", sql.DateTime, start);
   const result = await request.execute("FanPurchaseTicket");
+  return result;
+};
+
+const fanNationalIdFinder = async (username) => {
+  const request = new sql.Request();
+  request.input("username", sql.VarChar, username);
+  request.output("national_id", sql.VarChar);
+  const result = await request.execute("FanNationalIdFinder");
+  console.log(result, "FanNationalIdFinder");
   return result;
 };
 
@@ -49,4 +60,5 @@ module.exports = {
   fanRegister,
   fanViewMatchesWithAvailableTicketsStartingGivenDate,
   fanPurchaseTicket,
+  fanNationalIdFinder,
 };

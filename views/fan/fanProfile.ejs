@@ -4,29 +4,29 @@
     <title>Fan Profile</title>
   </head>
   <body>
-    <h1>Welcome, <%= user.name %>!</h1>
+    <h1>Welcome, <%= username %>!</h1>
 
     <h2>Upcoming Matches</h2>
     <ul>
-      <% locals.matches.forEach(function(match) { %> <% if (match.ticketsAvailable) {
-      %>
+      <% matches.forEach(function(match) { %>
       <li>
-        <%= match.homeTeam %> vs. <%= match.awayTeam %>
-        <form action="/purchase" method="post">
-          <input type="hidden" name="matchId" value="<%= match.id %>" />
-          <label for="ticketCount">Number of tickets:</label>
+        <%= match.HostClub %> vs. <%= match.GuestClub %>
+        <form action="/fan/purchaseTicket" method="post">
           <input
-            type="number"
-            name="ticketCount"
-            min="1"
-            max="<%= match.ticketsAvailable %>"
+            type="hidden"
+            name="host_club_name"
+            value="<%= match.HostClub %>"
           />
-          <button type="submit">Purchase</button>
+          <input
+            type="hidden"
+            name="guest_club_name"
+            value="<%= match.GuestClub %>"
+          />
+          <input type="hidden" name="start" value="<%= match.start_time %>" />
+          <button type="submit">Purchase ticket</button>
         </form>
       </li>
-      <% } else { %>
-      <li><%= match.homeTeam %> vs. <%= match.awayTeam %> (sold out)</li>
-      <% } %> <% }); %>
+      <% }); %>
     </ul>
   </body>
 </html>
