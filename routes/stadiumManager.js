@@ -8,17 +8,30 @@ router.get(
   "/",
   authUser,
   authRole([ROLE.STADIUM_MANAGER]),
-  function (req, res, next) {
-    stadiumProcedure
+  async function (req, res, next) {
+    const stadiumInfo = await stadiumProcedure
       .stadiumManagerViewRelatedInfoOfHisStadium(req.session.username)
       .then((response) => {
-        console.log(response, "response");
-        res.render("stadiumManager/stadiumManagerProfile", {
-          title: "Stadium Manager",
-          username: req.session.username,
-          stadium: response.recordset[0],
-        });
+        console.log(response, "response of stadium info");
+        return response.recordset[0];
       });
+
+    const requests = await stadiumProcedure
+      .stadiumManagerViewRequestsHeReceived(req.session.username)
+      .then((response) => {
+        console.log(response, "response of requests");
+        return response.recordset;
+      });
+
+    console.log(stadiumInfo, "stadiumInfo");
+    console.log(requests, "request");
+
+    res.render("stadiumManager/stadiumManagerProfile", {
+      title: "Stadium Manager",
+      username: req.session.username,
+      stadium: stadiumInfo,
+      requests: requests,
+    });
   },
 );
 

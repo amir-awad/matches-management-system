@@ -158,13 +158,13 @@ go
 CREATE PROCEDURE StadiumManagerViewRequestsHeReceived
     @username varchar(20)
 AS
-SELECT club_representative.club_representative_name, C1.club_name, C2.club_name, match.start_time, match.end_time, request.request_status
-FROM request
-    INNER JOIN match ON request.match_id = match.match_id
-    INNER JOIN club_representative ON request.club_representative_id = club_representative.club_representative_id
+SELECT club_representative.representative_name, C1.club_name, C2.club_name, match.start_time, match.end_time, host_request.request_status
+FROM host_request
+    INNER JOIN match ON host_request.match_id = match.match_id
+    INNER JOIN club_representative ON host_request.representative_id = club_representative.representative_id
     INNER JOIN club C1 ON match.host_club_id = C1.club_id
     INNER JOIN club C2 ON match.guest_club_id = C2.club_id
-WHERE request.manager_id = (SELECT stadium_manager_id
+WHERE host_request.manager_id = (SELECT stadium_manager_id
 FROM stadium_manager
 WHERE username = @username)
 go
@@ -198,7 +198,7 @@ create procedure StadiumManagerAcceptRequest
 as
 declare @mang_id int, @h_id int, @g_id int, @m_id int,@s_id int
 
-select @mang_id = stadium_manager.stadium_manger_id
+select @mang_id = stadium_manager.stadium_manager_id
 from stadium_manager
 where @stadium_mang = stadium_manager.username
 
@@ -211,12 +211,12 @@ where host_club_id = @h_id AND guest_club_id = @g_id and start_time = @start
 
 select @s_id = stadium_id
 from stadium_manager
-where stadium_manger_id = @mang_id
+where stadium_manager_id = @mang_id
 
 declare @req_id int
 select @req_id= h.request_id
 from host_request h
-where @mang_id = h.manger_id AND @m_id = h.match_id and h.request_status = 'unhandled'
+where @mang_id = h.manager_id AND @m_id = h.match_id and h.request_status = 'unhandled'
 update host_request 
 set request_status = 'accepted'
 where request_id = @req_id
@@ -245,7 +245,7 @@ create procedure StadiumManagerRejectRequest
 as
 declare @mang_id int, @h_id int, @g_id int, @m_id int,@s_id int
 
-select @mang_id = stadium_manager.stadium_manger_id
+select @mang_id = stadium_manager.stadium_manager_id
 from stadium_manager
 where @stadium_mang = stadium_manager.username
 
@@ -258,11 +258,11 @@ where host_club_id = @h_id AND guest_club_id = @g_id and start_time = @start
 
 select @s_id = stadium_id
 from stadium_manager
-where stadium_manger_id = @mang_id
+where stadium_manager_id = @mang_id
 
 update host_request
 set request_status = 'rejected'
-where match_id = @m_id and manger_id = @mang_id
+where match_id = @m_id and manager_id = @mang_id
 go
 
 CREATE PROCEDURE ClubRepresentativeRegister
@@ -337,7 +337,7 @@ CREATE PROCEDURE ClubRepresentativeSendRequestToStadiumManager
 AS
 declare @mang_id int, @h_id int, @g_id int, @m_id int,@s_id int
 
-select @mang_id = stadium_manager.stadium_manger_id
+select @mang_id = stadium_manager.stadium_manager_id
 from stadium_manager
 where @stadium_mang = stadium_manager.username
 
@@ -350,11 +350,11 @@ where host_club_id = @h_id AND guest_club_id = @g_id and start_time = @start
 
 select @s_id = stadium_id
 from stadium_manager
-where stadium_manger_id = @mang_id
+where stadium_manager_id = @mang_id
 
 if not exists (select *
 from host_request
-where match_id = @m_id and manger_id = @mang_id)
+where match_id = @m_id and manager_id = @mang_id)
 begin
     INSERT INTO host_request
     VALUES(@m_id, @mang_id, @s_id, 'pending')
@@ -377,8 +377,8 @@ where @username = USERS.username)
 begin
     INSERT INTO USERS
     VALUES(@username, @password)
-    INSERT INTO association_manger
-        (association_manger_name, username)
+    INSERT INTO association_manager
+        (association_manager_name, username)
     VALUES(@name, @username)
 end
 else
@@ -516,10 +516,10 @@ where @name = stadium_name
 declare @username varchar(20) = (select username
 from stadium_manager
 where stadium_manager.stadium_id = @stadium_id)
-declare @mang int = (select stadium_manager.stadium_manger_id
+declare @mang int = (select stadium_manager.stadium_manager_id
 from stadium_manager
 where stadium_manager.stadium_id = @stadium_id)
-delete from host_request where host_request.manger_id = @mang
+delete from host_request where host_request.manager_id = @mang
 delete from stadium_manager
 where stadium_manager.stadium_id = @stadium_id
 delete from USERS
@@ -582,8 +582,8 @@ begin
     SET @type = 3
 end
 else if exists (select username
-from association_manger
-where @username = association_manger.username)
+from association_manager
+where @username = association_manager.username)
 begin
     SET @type = 4
 end

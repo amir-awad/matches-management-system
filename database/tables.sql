@@ -50,7 +50,7 @@ CREATE TABLE club
 
 CREATE TABLE stadium_manager
 (
-    stadium_manger_id INT IDENTITY(1,1) Primary Key,
+    stadium_manager_id INT IDENTITY(1,1) Primary Key,
     stadium_manager_name VARCHAR
  (20),
     stadium_id INT,
@@ -73,10 +73,10 @@ CREATE TABLE club_representative
     FOREIGN KEY (club_id) REFERENCES club (club_id)
 );
 
-CREATE TABLE association_manger
+CREATE TABLE association_manager
 (
-    association_manger_id INT IDENTITY(1,1) Primary Key,
-    association_manger_name VARCHAR
+    association_manager_id INT IDENTITY(1,1) Primary Key,
+    association_manager_name VARCHAR
  (20),
     username VARCHAR
  (20),
@@ -121,11 +121,11 @@ CREATE TABLE host_request
 (
     request_id INT IDENTITY(1,1) Primary Key,
     representative_id INT,
-    manger_id INT,
+    manager_id INT,
     match_id INT,
     request_status varchar(20) default 'unhandled',
     FOREIGN KEY (representative_id) REFERENCES club_representative (representative_id),
-    FOREIGN KEY (manger_id) REFERENCES stadium_manager (stadium_manger_id),
+    FOREIGN KEY (manager_id) REFERENCES stadium_manager (stadium_manager_id),
     FOREIGN KEY (match_id) REFERENCES match (match_id)
 );
 
