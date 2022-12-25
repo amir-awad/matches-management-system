@@ -9,10 +9,13 @@ router.get(
   authUser,
   authRole([ROLE.SYSTEM_ADMIN]),
   function (req, res, next) {
-    res.render("admin/adminDashboard", {
-      title: "Admin",
-      user: req.session.user,
-    });
+    console.log(req.session.username, "ADMIN req.session.username");
+    if (req.session.username)
+      res.render("admin/adminProfile", {
+        title: "Admin",
+        username: req.session.username,
+      });
+    else res.redirect("/");
   },
 );
 
@@ -21,7 +24,10 @@ router.get(
   authUser,
   authRole([ROLE.SYSTEM_ADMIN]),
   function (req, res, next) {
-    res.render("admin/addClub", { title: "Add Club", user: req.session.user });
+    res.render("admin/adminProfile", {
+      title: "Add Club",
+      username: req.session.username,
+    });
   },
 );
 
@@ -30,14 +36,15 @@ router.post(
   authUser,
   authRole([ROLE.SYSTEM_ADMIN]),
   async function (req, res, next) {
-    const { name, c_location } = req.body;
+    const name = req.body.clubName;
+    const c_location = req.body.clubLocation;
     const result = await adminProcedures.adminAddNewClub(name, c_location);
     if (result) {
-      toast.success(req, "Club added successfully");
+      // toast.showToast(req, "Club added successfully");
       res.redirect("/admin");
     } else {
-      toast.error(req, "Club already exists");
-      res.redirect("/admin/addClub");
+      toast.showToast(req, "Club already exists");
+      // res.redirect("/admin/addClub");
     }
   },
 );
@@ -47,9 +54,9 @@ router.get(
   authUser,
   authRole([ROLE.SYSTEM_ADMIN]),
   function (req, res, next) {
-    res.render("admin/deleteClub", {
+    res.render("admin/adminProfile", {
       title: "Delete Club",
-      user: req.session.user,
+      username: req.session.username,
     });
   },
 );
@@ -59,14 +66,15 @@ router.post(
   authUser,
   authRole([ROLE.SYSTEM_ADMIN]),
   async function (req, res, next) {
-    const { name } = req.body;
+    const name = req.body.clubName;
+    console.log(name, "club name to delete");
     const result = await adminProcedures.adminDeleteClub(name);
     if (result) {
-      toast.success(req, "Club deleted successfully");
+      // toast.showToast(req, "Club deleted successfully");
       res.redirect("/admin");
     } else {
-      toast.error(req, "Club does not exist");
-      res.redirect("/admin/deleteClub");
+      toast.showToast(req, "Club does not exist");
+      // res.redirect("/admin/deleteClub");
     }
   },
 );
@@ -76,9 +84,9 @@ router.get(
   authUser,
   authRole([ROLE.SYSTEM_ADMIN]),
   function (req, res, next) {
-    res.render("admin/addStadium", {
+    res.render("admin/adminProfile", {
       title: "Add Stadium",
-      user: req.session.user,
+      username: req.session.username,
     });
   },
 );
@@ -88,18 +96,20 @@ router.post(
   authUser,
   authRole([ROLE.SYSTEM_ADMIN]),
   async function (req, res, next) {
-    const { name, location, capacity } = req.body;
+    const name = req.body.stadiumName;
+    const location = req.body.stadiumLocation;
+    const capacity = req.body.stadiumCapacity;
     const result = await adminProcedures.adminAddNewStadium(
       name,
       location,
       capacity,
     );
     if (result) {
-      toast.success(req, "Stadium added successfully");
+      toast.showToast(req, "Stadium added successfully");
       res.redirect("/admin");
     } else {
-      toast.error(req, "Stadium already exists");
-      res.redirect("/admin/addStadium");
+      toast.showToast(req, "Stadium already exists");
+      // res.redirect("/admin/addStadium");
     }
   },
 );
@@ -109,9 +119,9 @@ router.get(
   authUser,
   authRole([ROLE.SYSTEM_ADMIN]),
   function (req, res, next) {
-    res.render("admin/deleteStadium", {
+    res.render("admin/adminProfile", {
       title: "Delete Stadium",
-      user: req.session.user,
+      username: req.session.username,
     });
   },
 );
@@ -121,14 +131,14 @@ router.post(
   authUser,
   authRole([ROLE.SYSTEM_ADMIN]),
   async function (req, res, next) {
-    const { name } = req.body;
+    const name = req.body.stadiumName;
     const result = await adminProcedures.adminDeleteStadium(name);
     if (result) {
-      toast.success(req, "Stadium deleted successfully");
+      toast.showToast(req, "Stadium deleted successfully");
       res.redirect("/admin");
     } else {
-      toast.error(req, "Stadium does not exist");
-      res.redirect("/admin/deleteStadium");
+      toast.showToast(req, "Stadium does not exist");
+      // res.redirect("/admin/deleteStadium");
     }
   },
 );
@@ -138,9 +148,9 @@ router.get(
   authUser,
   authRole([ROLE.SYSTEM_ADMIN]),
   function (req, res, next) {
-    res.render("admin/blockFan", {
+    res.render("admin/adminProfile", {
       title: "Block Fan",
-      user: req.session.user,
+      username: req.session.username,
     });
   },
 );
@@ -150,14 +160,14 @@ router.post(
   authUser,
   authRole([ROLE.SYSTEM_ADMIN]),
   async function (req, res, next) {
-    const { username } = req.body;
-    const result = await adminProcedures.adminBlockFan(username);
+    const national_id = req.body.fanNationalId;
+    const result = await adminProcedures.adminBlockFan(national_id);
     if (result) {
-      toast.success(req, "Fan blocked successfully");
+      toast.showToast(req, "Fan blocked successfully");
       res.redirect("/admin");
     } else {
-      toast.error(req, "Fan does not exist");
-      res.redirect("/admin/blockFan");
+      toast.showToast(req, "Fan does not exist");
+      // res.redirect("/admin/blockFan");
     }
   },
 );

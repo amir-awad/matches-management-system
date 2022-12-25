@@ -86,7 +86,7 @@ app.listen(
 
     // query to select all users
     const request = new sql.Request();
-    request.query("SELECT * FROM users", (err, result) => {
+    request.query("SELECT * FROM stadium", (err, result) => {
       if (err) {
         console.log(err);
       } else {

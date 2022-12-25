@@ -1,0 +1,135 @@
+<!-- Any system admin can do the following operations: 1) Add a new club using its name and location. 2) Delete a club using its name.  3)  Add a new stadium using its name, location and capacity. 4) Delete a stadium using its name. 5) Block a fan using its national id number..... I want you to write an ejs file for the admin page  -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Welcome, <%username%></h1>
+      <hr />
+      <div class="row">
+        <div class="col-md-6">
+          <h3>Add a new club</h3>
+          <form action="/admin/addClub" method="POST">
+            <div class="form-group">
+              <label for="clubName">Club Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="clubName"
+                placeholder="Enter club name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="clubLocation">Club Location</label>
+              <input
+                type="text"
+                class="form-control"
+                name="clubLocation"
+                placeholder="Enter club location"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <h3>Delete a club</h3>
+          <form action="/admin/deleteClub" method="POST">
+            <div class="form-group">
+              <label for="clubName">Club Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="clubName"
+                placeholder="Enter club name"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Delete</button>
+          </form>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-md-6">
+          <h3>Add a new stadium</h3>
+          <form action="/admin/addStadium" method="POST">
+            <div class="form-group">
+              <label for="stadiumName">Stadium Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="stadiumName"
+                placeholder="Enter stadium name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="stadiumLocation">Stadium Location</label>
+              <input
+                type="text"
+                class="form-control"
+                name="stadiumLocation"
+                placeholder="Enter stadium location"
+              />
+            </div>
+            <div class="form-group">
+              <label for="stadiumCapacity">Stadium Capacity</label>
+              <input
+                type="text"
+                class="form-control"
+                name="stadiumCapacity"
+                placeholder="Enter stadium capacity"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <h3>Delete a stadium</h3>
+          <form action="/admin/deleteStadium" method="POST">
+            <div class="form-group">
+              <label for="stadiumName">Stadium Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="stadiumName"
+                placeholder="Enter stadium name"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Delete</button>
+          </form>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-md-6">
+          <h3>Block a fan</h3>
+          <form action="/admin/blockFan" method="POST">
+            <div class="form-group">
+              <label for="fanNationalId">Fan National Id</label>
+              <input
+                type="text"
+                class="form-control"
+                name="fanNationalId"
+                placeholder="Enter fan national id"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Block</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- handle toast success and error -->
+<% if (typeof success !== 'undefined') { %>
+<script>
+  $(document).ready(function () {
+    toastr.success("<%= success %>");
+  });
+</script>
+<% } %> <% if (typeof error !== 'undefined') { %>
+<script>
+  $(document).ready(function () {
+    toastr.error("<%= error %>");
+  });
+</script>
+<% } %>
