@@ -12,6 +12,7 @@ router.get(
     res.render("sportsManager/sportsManagerProfile", {
       title: "Sports Manager",
       username: req.session.username,
+      upcoming_matches: "",
     });
   },
 );
@@ -22,21 +23,23 @@ router.post(
   authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
   async function (req, res, next) {
     const host_club_name = req.body.hostClubName;
-    const guest_club_name = req.body.guest_club_name;
+    const guest_club_name = req.body.guestClubName;
     const start_time = req.body.startTime;
     const end_time = req.body.endTime;
     const result = await sportsManagerProcedures.sportsManagerAddNewMatch(
       host_club_name,
       guest_club_name,
-      start_time,
-      end_time,
+      new Date(start_time),
+      new Date(end_time),
     );
 
+    console.log(result, "Sports manager add match result");
+
     if (result) {
-      toast.showToast("Match added successfully!");
-      res.redirect("sportsAssociationManager");
+      toast.showToast(req, "Match added successfully!");
+      res.redirect("/sportsAssociationManager");
     } else {
-      toast.showToast("Match already exists!");
+      toast.showToast(req, "Match already exists!");
     }
   },
 );
@@ -47,22 +50,42 @@ router.post(
   authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
   async function (req, res, next) {
     const host_club_name = req.body.hostClubName;
-    const guest_club_name = req.body.guest_club_name;
+    const guest_club_name = req.body.guestClubName;
     const start_time = req.body.startTime;
     const end_time = req.body.endTime;
     const result = await sportsManagerProcedures.sportsManagerDeleteMatch(
       host_club_name,
       guest_club_name,
-      start_time,
-      end_time,
+      new Date(start_time),
+      new Date(end_time),
     );
 
-    
     if (result) {
-      toast.showToast("Match added successfully!");
-      res.redirect("sportsAssociationManager");
+      toast.showToast(req, "Match deleted successfully!");
+      res.redirect("/sportsAssociationManager");
     } else {
-      toast.showToast("Match already exists!");
+      toast.showToast(req, "Match does not exist!");
+    }
+  },
+);
+
+router.post(
+  "/view-upcoming-matches",
+  authUser,
+  authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
+  async function (req, res, next) {
+    const result =
+      await sportsManagerProcedures.sportsManagerViewUpcomingMatches();
+
+    if (result) {
+      toast.showToast(req, "Matches are fetched successfully!");
+      res.render("sportsManager/sportsManagerProfile", {
+        title: "Sports Manager",
+        username: req.session.username,
+        upcoming_matches: result.recordset,
+      });
+    } else {
+      toast.showToast(req, "Match can not be fetched!");
     }
   },
 );
