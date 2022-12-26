@@ -13,6 +13,8 @@ router.get(
       title: "Sports Manager",
       username: req.session.username,
       upcoming_matches: "",
+      played_matches: "",
+      never_played_clubs: "",
     });
   },
 );
@@ -83,6 +85,54 @@ router.post(
         title: "Sports Manager",
         username: req.session.username,
         upcoming_matches: result.recordset,
+        played_matches: "",
+        never_played_clubs: "",
+      });
+    } else {
+      toast.showToast(req, "Match can not be fetched!");
+    }
+  },
+);
+
+router.post(
+  "/view-played-matches",
+  authUser,
+  authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
+  async function (req, res, next) {
+    const result =
+      await sportsManagerProcedures.sportsManagerViewPlayedMatches();
+
+    if (result) {
+      toast.showToast(req, "Matches are fetched successfully!");
+      res.render("sportsManager/sportsManagerProfile", {
+        title: "Sports Manager",
+        username: req.session.username,
+        upcoming_matches: "",
+        played_matches: result.recordset,
+        never_played_clubs: "",
+      });
+    } else {
+      toast.showToast(req, "Match can not be fetched!");
+    }
+  },
+);
+
+router.post(
+  "/view-never-played-clubs",
+  authUser,
+  authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
+  async function (req, res, next) {
+    const result =
+      await sportsManagerProcedures.sportsManagerViewPairOfClubNamesWhoNeverScheduledToPlayWithEachOther();
+
+    if (result) {
+      toast.showToast(req, "Matches are fetched successfully!");
+      res.render("sportsManager/sportsManagerProfile", {
+        title: "Sports Manager",
+        username: req.session.username,
+        upcoming_matches: "",
+        played_matches: "",
+        never_played_clubs: result.recordset,
       });
     } else {
       toast.showToast(req, "Match can not be fetched!");
