@@ -535,7 +535,7 @@ go
 CREATE PROCEDURE AdminBlockFan
     @national_id varchar(20)
 AS
-UPDATE fan SET fan_status = 1 WHERE national_id=@national_id;
+UPDATE fan SET fan_status = 0 WHERE national_id=@national_id;
 
 go
 

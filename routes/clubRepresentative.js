@@ -21,6 +21,7 @@ router.get(
         username: req.session.username,
         club: clubinfo,
         matches: upcomingmatches,
+        stadiums: null
       });
     },
   );
@@ -31,17 +32,31 @@ router.get(
     authUser,
     authRole([ROLE.CLUB_REPRESENTATIVE]),
     async function (req, res, next) {
+      const clubinfo = await clubRepresentativeProcedures.clubRepresentativeViewRelatedInfoOfHisClub(req.session.username)
+      .then((response) => {
+        return response.recordset[0];
+      });
+      const upcomingmatches = await clubRepresentativeProcedures.clubRepresentativeViewUpcomingMatches(req.session.username)
+      .then((response) => {
+        return response.recordset;
+      });
         if(req.body.start_Date != undefined){
           date = req.body.start_Date + " 00:00:00.000";
         }
         console.log(date);
         const stadiumsinfo = await clubRepresentativeProcedures.clubRepresentativeViewAvailableStadiumsStartingAtCertainDate(req.session.username,date)
         .then((response) => {
-          return response.recordset[0];
+          return response.recordset;
         });
         console.log("here-------------");
         console.log(stadiumsinfo);
-      res.redirect("/");
+      res.render("clubRepresentative/clubRepresentativeProfile",{
+        title: "club Representative",
+        username: req.session.username,
+        club: clubinfo,
+        matches: upcomingmatches,
+        stadiums : stadiumsinfo
+      });
     },
   );
 

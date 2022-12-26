@@ -40,6 +40,15 @@
       maxlength="20"/>
       <button type="submit">Submit</button>
     </form>
+    <% if(stadiums){ %>
+      <ul>
+      <% stadiums.forEach(function(stadium) { %>
+        <li>
+          Stadium Name:<%= stadium.stadium_name %> <br> Stadium Location: <%= stadium.stadium_location %> <br> Stadium Capacity: <%= stadium.stadium_capacity %>
+        </li>
+      <% }); %>
+      </ul>
+    <% } %>
 
     <hr>
 
