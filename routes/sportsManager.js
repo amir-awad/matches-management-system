@@ -57,6 +57,7 @@ router.post(
       end_time,
     );
 
+    
     if (result) {
       toast.showToast("Match added successfully!");
       res.redirect("sportsAssociationManager");
