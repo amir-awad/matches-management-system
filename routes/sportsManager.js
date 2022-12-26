@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const sportsManagerProcedures = require("../procedures/adminProcedures");
+const sportsManagerProcedures = require("../procedures/sportsManagerProcedures");
 const toast = require("../utilities/toast");
 const { authUser, authRole, ROLE } = require("../utilities/auth");
 
@@ -26,6 +26,31 @@ router.post(
     const start_time = req.body.startTime;
     const end_time = req.body.endTime;
     const result = await sportsManagerProcedures.sportsManagerAddNewMatch(
+      host_club_name,
+      guest_club_name,
+      start_time,
+      end_time,
+    );
+
+    if (result) {
+      toast.showToast("Match added successfully!");
+      res.redirect("sportsAssociationManager");
+    } else {
+      toast.showToast("Match already exists!");
+    }
+  },
+);
+
+router.post(
+  "/delete-match",
+  authUser,
+  authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
+  async function (req, res, next) {
+    const host_club_name = req.body.hostClubName;
+    const guest_club_name = req.body.guest_club_name;
+    const start_time = req.body.startTime;
+    const end_time = req.body.endTime;
+    const result = await sportsManagerProcedures.sportsManagerDeleteMatch(
       host_club_name,
       guest_club_name,
       start_time,
