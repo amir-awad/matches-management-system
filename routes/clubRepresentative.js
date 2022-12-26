@@ -16,7 +16,10 @@ router.get(
         .then((response) => {
           return response.recordset;
         });
-      res.render("clubRepresentative/clubRepresentativeProfile", {
+        console.log("upcomingmatches");
+        console.log(upcomingmatches);
+        console.log("upcomingmatches"); 
+        res.render("clubRepresentative/clubRepresentativeProfile", {
         title: "club Representative",
         username: req.session.username,
         club: clubinfo,
@@ -43,7 +46,6 @@ router.get(
         if(req.body.start_Date != undefined){
           date = req.body.start_Date + " 00:00:00.000";
         }
-        console.log(date);
         const stadiumsinfo = await clubRepresentativeProcedures.clubRepresentativeViewAvailableStadiumsStartingAtCertainDate(req.session.username,date)
         .then((response) => {
           return response.recordset;
