@@ -16,14 +16,32 @@ router.get(
         .then((response) => {
           return response.recordset;
         });
-        console.log("hereeee------------");
-        console.log(upcomingmatches);
       res.render("clubRepresentative/clubRepresentativeProfile", {
         title: "club Representative",
         username: req.session.username,
         club: clubinfo,
-        matches: upcomingmatches
+        matches: upcomingmatches,
       });
+    },
+  );
+
+
+  router.post(
+    "/getstadiums",
+    authUser,
+    authRole([ROLE.CLUB_REPRESENTATIVE]),
+    async function (req, res, next) {
+        if(req.body.start_Date != undefined){
+          date = req.body.start_Date + " 00:00:00.000";
+        }
+        console.log(date);
+        const stadiumsinfo = await clubRepresentativeProcedures.clubRepresentativeViewAvailableStadiumsStartingAtCertainDate(req.session.username,date)
+        .then((response) => {
+          return response.recordset[0];
+        });
+        console.log("here-------------");
+        console.log(stadiumsinfo);
+      res.redirect("/");
     },
   );
 

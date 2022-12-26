@@ -28,9 +28,22 @@
 
     <hr>
 
+    <h2>Upcoming Matches</h2>
+    <form action="/clubRepresentative/getstadiums" method="POST">
+      <input 
+      type="date"
+      id="start_stadium_view_date"
+      name="start_Date"
+      class="form-control"
+      placeholder="Start_Date"
+      required
+      maxlength="20"/>
+      <button type="submit">Submit</button>
+    </form>
 
-    
+    <hr>
+
     <form action="/logout" method="get">
-      <button type="submit">Logout</button>
+      <button type="submit" >Logout</button>
   </body>
 </html>
