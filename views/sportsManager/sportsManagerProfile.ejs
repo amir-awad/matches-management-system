@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Sports Manager</title>
+  </head>
+  <body>
+    <h1>Sports Manager</h1>
+
+    <h2>Add a new match</h2>
+    <form action="/add-match" method="post">
+      <label for="host-club-name">Host club name:</label><br />
+      <input type="text" id="host-club-name" name="hostClubName" /><br />
+      <label for="guest-club-name">Guest club name:</label><br />
+      <input type="text" id="guest-club-name" name="guestClubName" /><br />
+      <label for="start-time">Start time:</label><br />
+      <input type="text" id="start-time" name="startTime" /><br />
+      <label for="end-time">End time:</label><br />
+      <input type="text" id="end-time" name="endTime" /><br />
+      <br />
+      <input type="submit" value="Add match" />
+    </form>
+
+    <h2>Delete a match</h2>
+    <form action="/delete-match" method="post">
+      <label for="host-club-name">Host club name:</label><br />
+      <input type="text" id="host-club-name" name="hostClubName" /><br />
+      <label for="guest-club-name">Guest club name:</label><br />
+      <input type="text" id="guest-club-name" name="guestClubName" /><br />
+      <label for="start-time">Start time:</label><br />
+      <input type="text" id="start-time" name="startTime" /><br />
+      <label for="end-time">End time:</label><br />
+      <input type="text" id="end-time" name="endTime" /><br />
+      <br />
+      <input type="submit" value="Delete match" />
+    </form>
+
+    <h2>View all upcoming matches</h2>
+    <form action="/view-upcoming-matches" method="post">
+      <input type="submit" value="View upcoming matches" />
+    </form>
+
+    <h2>View already played matches</h2>
+    <form action="/view-played-matches" method="post">
+      <input type="submit" value="View played matches" />
+    </form>
+
+    <h2>View pair of club names who never scheduled to play with each other</h2>
+    <form action="/view-never-played-clubs" method="post">
+      <input type="submit" value="View never played clubs" />
+    </form>
+  </body>
+</html>

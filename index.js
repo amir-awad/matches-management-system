@@ -60,7 +60,7 @@ app.use("/register", registerRoute);
 app.use("/admin", adminRoute);
 app.use("/fan", fanRoute);
 app.use("/clubRepresentative", clubRepresentativeRoute);
-app.use("/sportsManager", sportsManagerRoute);
+app.use("/sportsAssociationManager", sportsManagerRoute);
 app.use("/stadiumManager", stadiumManagerRoute);
 
 app.use((req, res) => {
@@ -86,7 +86,7 @@ app.listen(
 
     // query to select all users
     const request = new sql.Request();
-    request.query("SELECT * FROM stadium", (err, result) => {
+    request.query("SELECT * FROM users", (err, result) => {
       if (err) {
         console.log(err);
       } else {

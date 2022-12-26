@@ -10,8 +10,11 @@ const ROLE = {
 
 const authUser = function (req, res, next) {
   if (req.session.type) {
+    console.log(req.session.type, "req session type in authUser");
     next();
   } else {
+    console.log("Not authorized!!!!!");
+    console.log(req.session, "req session type in not authUser");
     res.status(StatusCodes.UNAUTHORIZED);
     res.redirect("/");
   }
