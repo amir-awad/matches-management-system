@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Club Representative</title>
+  </head>
+  <body>
+    <h1>Welcome, <%= username %>!</h1>
+
+    <h2>Club Details</h2>
+    <h4>Club Name:  <%= club.club_name %> </h4>
+    <ul>
+      <li> club id : <%= club.club_id %></li>
+      <li> club location : <%= club.club_location %></li>
+    </ul>
+
+    <hr>
+
+
+    <h2>Upcoming Matches</h2>
+    <ul>
+      <% for(var i=0; i<matches.length; i++) {%>
+        <li>
+          <%= matches[i].host_club_name %> vs. <%= matches[i].guest_club_name %> <br> start time: <%= matches[i].start_time %> <br> end time: <%= matches[i].end_time%>
+          <% if(matches[i].stadium_name) { %>
+            <br> stadium: <%= matches[i].stadium_name %>
+          <% } else{ %>  
+            <br>
+            <form>
+              <button type="submit">add Stadium</button>
+            </form> 
+          <% } %>
+        </li>
+     <% } %>
+    </ul>
+
+    <hr>
+
+    <h2>Upcoming Matches</h2>
+    <form action="/clubRepresentative/getstadiums" method="POST">
+      <input 
+      type="date"
+      id="start_stadium_view_date"
+      name="start_Date"
+      class="form-control"
+      placeholder="Start_Date"
+      required
+      maxlength="20"/>
+      <button type="submit">Submit</button>
+    </form>
+    <% if(stadiums){ %>
+      <ul>
+      <% stadiums.forEach(function(stadium) { %>
+        <li>
+          Stadium Name:<%= stadium.stadium_name %> <br> Stadium Location: <%= stadium.stadium_location %> <br> Stadium Capacity: <%= stadium.stadium_capacity %>
+        </li>
+      <% }); %>
+      </ul>
+    <% } %>
+
+    <hr>
+
+    <form action="/logout" method="get">
+      <button type="submit" >Logout</button>
+  </body>
+</html>

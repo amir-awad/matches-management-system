@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "preinstall": "npm i mssql",
     "start": "nodemon app.js"
   },
   "repository": {
@@ -26,7 +27,7 @@
     "http-status-codes": "^2.2.0",
     "moment": "^2.29.4",
     "morgan": "^1.10.0",
-    "mssql": "^9.0.1",
+    "mssql": "^7.2.0",
     "nodemon": "^2.0.20",
     "path": "^0.12.7"
   }
