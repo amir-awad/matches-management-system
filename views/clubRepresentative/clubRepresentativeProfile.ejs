@@ -7,15 +7,30 @@
   <body>
     <h1>Welcome, <%= username %>!</h1>
 
-    <!-- <h2>Stadium Details</h2>
-    <h4> <%= club.stadium_name %> </h4>
+    <h2>Club Details</h2>
+    <h4>Club Name:  <%= club.club_name %> </h4>
     <ul>
-      <li> stadium id : <%= stadium.stadium_id %></li>
-      <li> stadium location : <%= stadium.stadium_location %></li>
-      <li> stadium capacity : <%= stadium.stadium_capacity %></li>
-      <li> stadium status : <%= stadium.stadium_status %></li>
+      <li> club id : <%= club.club_id %></li>
+      <li> club location : <%= club.club_location %></li>
     </ul>
-    <hr> -->
 
+    <hr>
+
+
+    <h2>Upcoming Matches</h2>
+    <ul>
+      <% for(var i=0; i<matches.length; i++) {%>
+        <li>
+          <%= matches[i].host_club_name %> vs. <%= matches[i].guest_club_name %> <br> start time: <%= matches[i].start_time %> <br> end time: <%= matches[i].end_time%> <br> stadium: <%= matches[i].stadium_name %>
+        </li>
+     <% } %>
+    </ul>
+
+    <hr>
+
+
+    
+    <form action="/logout" method="get">
+      <button type="submit">Logout</button>
   </body>
 </html>
