@@ -16,9 +16,9 @@ router.get(
         .then((response) => {
           return response.recordset;
         });
-        console.log("upcomingmatches");
-        console.log(upcomingmatches);
-        console.log("upcomingmatches"); 
+        // console.log("upcomingmatches");
+        // console.log(upcomingmatches);
+        // console.log("upcomingmatches"); 
         res.render("clubRepresentative/clubRepresentativeProfile", {
         title: "club Representative",
         username: req.session.username,

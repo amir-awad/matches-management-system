@@ -28,6 +28,7 @@ const clubRepresentativeViewUpcomingMatches = async (username) => {
   const request = new sql.Request();
   request.input("username", sql.VarChar, username);
   const result = await request.execute("ClubRepresentativeViewUpcomingMatches");
+  console.log(result);
   return result;
 };
 

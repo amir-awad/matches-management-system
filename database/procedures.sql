@@ -306,9 +306,9 @@ go
 CREATE PROCEDURE ClubRepresentativeViewUpcomingMatches
     @username varchar(20)
 AS
-SELECT C1.club_name as host_club_name, C2.club_name as guest_club_name, M.start_time, M.end_time, S.stadium_name
-FROM match M, club C1, club C2, stadium S
-WHERE M.host_club_id = C1.club_id AND M.guest_club_id = C2.club_id AND M.stadium_id = S.stadium_id AND M.host_club_id = (SELECT club_id
+SELECT C1.club_name as host_club_name, C2.club_name as guest_club_name, M.start_time, M.end_time, M.stadium_id
+FROM match M, club C1, club C2
+WHERE M.host_club_id = C1.club_id AND M.guest_club_id = C2.club_id  AND M.host_club_id = (SELECT club_id
     FROM club_representative
     WHERE username = @username)
 go
