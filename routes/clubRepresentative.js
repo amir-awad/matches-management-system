@@ -92,6 +92,8 @@ router.post(
 
     console.log(stadiums, "stadiums");
 
+
+
     const clubInfo = await clubRepresentativeProcedures
       .clubRepresentativeViewRelatedInfoOfHisClub(req.session.username)
       .then((response) => {
