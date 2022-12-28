@@ -27,8 +27,9 @@
             <br> stadium: <%= matches[i].stadium_name %>
           <% } else{ %>  
             <br>
-            <form action="/clubRepresentative/view-upcoming-matches"method="POST">
-              <button type="submit">Send Request to Stadium </button>
+            <% var x= "/clubRepresentative/sendRequest" +i %>
+            <form action= <%= x %> method="POST">
+              <button type="submit">Send Request to Stadium <%= i %> </button>
             </form> 
           <% } %>
         </li>

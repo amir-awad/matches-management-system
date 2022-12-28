@@ -70,7 +70,15 @@ async function getStadiumNameOfMatch(stadium_id) {
     });
   return stadiumName;
 }
-
+router.post(
+    "/sendRequest:id",
+    authUser,
+    authRole([ROLE.CLUB_REPRESENTATIVE]),
+    async function (req, res, next) {
+    console.log("hereee----");
+    console.log(id);
+    },
+);
 router.post(
   "/view-available-stadiums",
   authUser,
@@ -89,11 +97,6 @@ router.post(
       .then((response) => {
         return response.recordset;
       });
-
-    console.log(stadiums, "stadiums");
-
-
-
     const clubInfo = await clubRepresentativeProcedures
       .clubRepresentativeViewRelatedInfoOfHisClub(req.session.username)
       .then((response) => {
