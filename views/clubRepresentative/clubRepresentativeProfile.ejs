@@ -19,9 +19,9 @@
 
     <h2>Upcoming Matches</h2>
     <ul>
-      <% for(var i=0; i<matches.length; i++) {%>
+      <% for(let i=0; i< matches.length; i++) { %>
         <li>
-          <%= matches[i].host_club_name %> vs. <%= matches[i].guest_club_name %> <br> start time: <%= matches[i].start_time %> <br> end time: <%= matches[i].end_time%>
+          <%= matches[i].club_name[0] %> vs. <%= matches[i].club_name[1] %> <br> start time: <%= matches[i].start_time %> <br> end time: <%= matches[i].end_time%>
           <% if(matches[i].stadium_name) { %>
             <br> stadium: <%= matches[i].stadium_name %>
           <% } else{ %>  

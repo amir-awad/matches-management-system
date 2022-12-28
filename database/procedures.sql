@@ -303,14 +303,26 @@ go
 
 -- View all upcoming matches for the club he is representing (in a form of host club name, guest club
 -- name, start time and end time) with the stadium name that hosts the match (if available).
-CREATE PROCEDURE ClubRepresentativeViewUpcomingMatches
+CREATE PROCEDURE ClubRepresentativeViewUpcomingMatchesForHisClub
     @username varchar(20)
 AS
-SELECT C1.club_name as host_club_name, C2.club_name as guest_club_name, M.start_time, M.end_time, M.stadium_id
+SELECT C1.club_name, C2.club_name, M.start_time, M.end_time, M.stadium_id
 FROM match M, club C1, club C2
-WHERE M.host_club_id = C1.club_id AND M.guest_club_id = C2.club_id  AND M.host_club_id = (SELECT club_id
+WHERE M.host_club_id = C1.club_id AND M.guest_club_id = C2.club_id AND M.start_time >= CURRENT_TIMESTAMP AND
+    (M.host_club_id = (SELECT club_id
     FROM club_representative
-    WHERE username = @username)
+    WHERE username = @username) OR M.guest_club_id = (SELECT club_id
+    FROM club_representative
+    WHERE username = @username))
+go
+
+-- Get the stadium name of the match with match id = @match_id and stadium_id = @stadium_id
+CREATE PROCEDURE ClubRepresentativeGetStadiumNameOfMatch
+    @stadium_id int
+AS
+SELECT stadium_name
+FROM stadium
+WHERE stadium_id = @stadium_id
 go
 
 -- View all available stadiums starting at a certain date (in a form of stadium name, location and

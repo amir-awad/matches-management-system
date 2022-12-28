@@ -50,7 +50,7 @@ function routeUser(req, res) {
     case ROLE.FAN:
       res.redirect("/fan");
       break;
-    case ROLE.CLUB_REPRESENTATIVE:  
+    case ROLE.CLUB_REPRESENTATIVE:
       res.redirect("/clubRepresentative");
       break;
     case ROLE.SYSTEM_ADMIN:

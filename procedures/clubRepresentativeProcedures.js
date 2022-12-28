@@ -27,8 +27,19 @@ const clubRepresentativeViewRelatedInfoOfHisClub = async (username) => {
 const clubRepresentativeViewUpcomingMatches = async (username) => {
   const request = new sql.Request();
   request.input("username", sql.VarChar, username);
-  const result = await request.execute("ClubRepresentativeViewUpcomingMatches");
+  const result = await request.execute(
+    "ClubRepresentativeViewUpcomingMatchesForHisClub",
+  );
   console.log(result);
+  return result;
+};
+
+const clubRepresentativeGetStadiumNameOfMatch = async (stadium_id) => {
+  const request = new sql.Request();
+  request.input("stadium_id", sql.Int, stadium_id);
+  const result = await request.execute(
+    "ClubRepresentativeGetStadiumNameOfMatch",
+  );
   return result;
 };
 
@@ -68,6 +79,7 @@ module.exports = {
   clubRepresentativeRegister,
   clubRepresentativeViewRelatedInfoOfHisClub,
   clubRepresentativeViewUpcomingMatches,
+  clubRepresentativeGetStadiumNameOfMatch,
   clubRepresentativeViewAvailableStadiumsStartingAtCertainDate,
   clubRepresentativeSendRequestToStadiumManager,
 };

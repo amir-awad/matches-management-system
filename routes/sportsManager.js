@@ -122,8 +122,9 @@ router.post(
   authUser,
   authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
   async function (req, res, next) {
-    const result =
-      await sportsManagerProcedures.sportsManagerViewPairOfClubNamesWhoNeverScheduledToPlayWithEachOther();
+    const result = await removeClubsFromNeverPlayedMatches(
+      await sportsManagerProcedures.sportsManagerViewPairOfClubNamesWhoNeverScheduledToPlayWithEachOther(),
+    );
 
     if (result) {
       toast.showToast(req, "Matches are fetched successfully!");
@@ -139,5 +140,71 @@ router.post(
     }
   },
 );
+
+async function removeClubsFromNeverPlayedMatches(never_played_clubs) {
+  const upcoming_matches =
+    await sportsManagerProcedures.sportsManagerViewUpcomingMatches();
+  const played_matches =
+    await sportsManagerProcedures.sportsManagerViewPlayedMatches();
+
+  console.log(
+    never_played_clubs.recordset,
+    "never played clubs before removing",
+  );
+
+  for (let i = 0; i < never_played_clubs.recordset.length; i++) {
+    for (let j = 0; j < upcoming_matches.recordset.length; j++) {
+      if (
+        never_played_clubs.recordset[i].host_club_name ===
+          upcoming_matches.recordset[j].guest_club_name &&
+        never_played_clubs.recordset[i].guest_club_name ===
+          upcoming_matches.recordset[j].host_club_name
+      ) {
+        console.log("upcoming matches", upcoming_matches.recordset[j]);
+        never_played_clubs.recordset[i] = null;
+      }
+    }
+  }
+
+  for (let i = 0; i < never_played_clubs.recordset.length; i++) {
+    for (
+      let j = 0;
+      j < played_matches.recordset.length &&
+      never_played_clubs.recordset[i] != null;
+      j++
+    ) {
+      if (
+        never_played_clubs.recordset[i].host_club_name ===
+          played_matches.recordset[j].guest_club_name &&
+        never_played_clubs.recordset[i].guest_club_name ===
+          played_matches.recordset[j].host_club_name
+      ) {
+        never_played_clubs.recordset[i] = null;
+      }
+    }
+  }
+
+  for (let i = 0; i < never_played_clubs.recordset.length; i++) {
+    for (let j = 0; j < never_played_clubs.recordset.length; j++) {
+      if (
+        never_played_clubs.recordset[i] != null &&
+        never_played_clubs.recordset[j] != null &&
+        never_played_clubs.recordset[i].host_club_name ===
+          never_played_clubs.recordset[j].guest_club_name &&
+        never_played_clubs.recordset[i].guest_club_name ===
+          never_played_clubs.recordset[j].host_club_name
+      ) {
+        never_played_clubs.recordset[j] = null;
+      }
+    }
+  }
+
+  console.log(
+    never_played_clubs.recordset,
+    "never played clubs after removing",
+  );
+
+  return never_played_clubs;
+}
 
 module.exports = router;

@@ -84,9 +84,9 @@
       <input type="submit" value="View never played clubs" />
       <% if(never_played_clubs) { %>
       <ul>
-        <% never_played_clubs.forEach(function(club) { %>
+        <% never_played_clubs.forEach(function(club) { %> <% if(club) { %>
         <li><%= club.host_club_name %> vs. <%= club.guest_club_name %></li>
-        <% }); %>
+        <% } %> <% }); %>
       </ul>
       <% } %>
     </form>
