@@ -40,7 +40,8 @@
 
     <h2>Available Stadiums</h2>
     <form action="/clubRepresentative/view-available-stadiums" method="POST">
-      <input type="text" id="start-time" name="startTime" required/>
+      <input type="text" id="date" name="date" required/>
+      <input type="text" id="time" name="time" required/>
       <button type="submit">Submit</button>
     </form>
     <% if(stadiums){ %>

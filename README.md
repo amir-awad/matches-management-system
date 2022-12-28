@@ -25,6 +25,14 @@ sudo docker cp ./database/insertion.sql matches-management-system_db_1:tmp
 sudo docker cp ./database/procedures.sql matches-management-system_db_1:tmp
 ```
 
+OR
+```bash
+sudo docker cp ./database/tables.sql matches-management-system-db-1:tmp
+sudo docker cp ./database/insertion.sql matches-management-system-db-1:tmp
+sudo docker cp ./database/procedures.sql matches-management-system-db-1:tmp
+sudo docker exec -it matches-management-system-db-1 bash
+```
+
 - Then, enter the bash of the database container by running the following command:
 
 ```bash

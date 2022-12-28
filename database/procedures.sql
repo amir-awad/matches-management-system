@@ -334,9 +334,11 @@ CREATE PROCEDURE ClubRepresentativeViewAvailableStadiumsStartingAtCertainDate
 AS
 SELECT S.stadium_name, S.stadium_location, S.stadium_capacity
 FROM stadium S
-WHERE S.stadium_id NOT IN (SELECT M.stadium_id
-FROM match M
-WHERE M.start_time >= @date)
+WHERE S.stadium_id NOT IN (
+    SELECT m.stadium_id 
+    FROM match m 
+    WHERE m.start_time >= @date AND m.stadium_id IS NOT NULL
+)
 go
 
 -- Send a request to a stadium manager requesting to host an upcoming match his club is hosting.

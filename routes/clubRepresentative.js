@@ -77,7 +77,9 @@ router.post(
   authRole([ROLE.CLUB_REPRESENTATIVE]),
   async function (req, res, next) {
     const username = req.session.username;
-    const start_time = req.body.startTime;
+    const date = req.body.date;
+    const time =req.body.time;
+    const start_time = date+" "+time;
 
     const stadiums = await clubRepresentativeProcedures
       .clubRepresentativeViewAvailableStadiumsStartingAtCertainDate(
