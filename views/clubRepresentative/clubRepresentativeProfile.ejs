@@ -18,6 +18,7 @@
 
 
     <h2>Upcoming Matches</h2>
+    <form action="/clubRepresentative/view-upcoming-matches" method="POST">
     <ul>
       <% for(let i=0; i< matches.length; i++) { %>
         <li>
@@ -33,19 +34,13 @@
         </li>
      <% } %>
     </ul>
-
+    <button type="submit">View Upcoming Matches</button>
+    </form>
     <hr>
 
     <h2>Available Stadiums</h2>
-    <form action="/clubRepresentative/getstadiums" method="POST">
-      <input 
-      type="date"
-      id="start_stadium_view_date"
-      name="start_Date"
-      class="form-control"
-      placeholder="Start_Date"
-      required
-      maxlength="20"/>
+    <form action="/clubRepresentative/view-available-stadiums" method="POST">
+      <input type="text" id="start-time" name="startTime" required/>
       <button type="submit">Submit</button>
     </form>
     <% if(stadiums){ %>

@@ -8,36 +8,54 @@ router.get(
   authUser,
   authRole([ROLE.CLUB_REPRESENTATIVE]),
   async function (req, res, next) {
-    const clubinfo = await clubRepresentativeProcedures
+    const clubInfo = await clubRepresentativeProcedures
       .clubRepresentativeViewRelatedInfoOfHisClub(req.session.username)
       .then((response) => {
         return response.recordset[0];
       });
-    let upcomingmatches = await clubRepresentativeProcedures
+
+    res.render("clubRepresentative/clubRepresentativeProfile", {
+      title: "club Representative",
+      username: req.session.username,
+      club: clubInfo,
+      matches: "",
+      stadiums: null,
+    });
+  },
+);
+
+router.post(
+  "/view-upcoming-matches",
+  authUser,
+  authRole([ROLE.CLUB_REPRESENTATIVE]),
+  async function (req, res, next) {
+    const clubInfo = await clubRepresentativeProcedures
+      .clubRepresentativeViewRelatedInfoOfHisClub(req.session.username)
+      .then((response) => {
+        return response.recordset[0];
+      });
+    let upcoming_matches = await clubRepresentativeProcedures
       .clubRepresentativeViewUpcomingMatches(req.session.username)
       .then((response) => {
         return response.recordset;
       });
 
-    async function update_upcomingmatches() {
-      for (let i = 0; i < upcomingmatches.length; i++) {
+    async function update_upcoming_matches() {
+      for (let i = 0; i < upcoming_matches.length; i++) {
         const stadium_name = await getStadiumNameOfMatch(
-          upcomingmatches[i].stadium_id,
+          upcoming_matches[i].stadium_id,
         );
-        upcomingmatches[i].stadium_name = stadium_name;
+        upcoming_matches[i].stadium_name = stadium_name;
       }
-
-      return upcomingmatches;
+      return upcoming_matches;
     }
 
-    upcomingmatches = await update_upcomingmatches();
-    console.log(upcomingmatches, "club representative club upcoming matches");
-
+    upcoming_matches = await update_upcoming_matches();
     res.render("clubRepresentative/clubRepresentativeProfile", {
       title: "club Representative",
       username: req.session.username,
-      club: clubinfo,
-      matches: upcomingmatches,
+      club: clubInfo,
+      matches: upcoming_matches,
       stadiums: null,
     });
   },
@@ -54,39 +72,36 @@ async function getStadiumNameOfMatch(stadium_id) {
 }
 
 router.post(
-  "/getstadiums",
+  "/view-available-stadiums",
   authUser,
   authRole([ROLE.CLUB_REPRESENTATIVE]),
   async function (req, res, next) {
-    const clubinfo = await clubRepresentativeProcedures
-      .clubRepresentativeViewRelatedInfoOfHisClub(req.session.username)
-      .then((response) => {
-        return response.recordset[0];
-      });
-    const upcomingmatches = await clubRepresentativeProcedures
-      .clubRepresentativeViewUpcomingMatches(req.session.username)
-      .then((response) => {
-        return response.recordset;
-      });
-    if (req.body.start_Date != undefined) {
-      date = req.body.start_Date + " 00:00:00.000";
-    }
-    const stadiumsinfo = await clubRepresentativeProcedures
+    const username = req.session.username;
+    const start_time = req.body.startTime;
+
+    const stadiums = await clubRepresentativeProcedures
       .clubRepresentativeViewAvailableStadiumsStartingAtCertainDate(
-        req.session.username,
-        date,
+        username,
+        new Date(start_time),
       )
       .then((response) => {
         return response.recordset;
       });
-    console.log("here-------------");
-    console.log(stadiumsinfo);
+
+    console.log(stadiums, "stadiums");
+
+    const clubInfo = await clubRepresentativeProcedures
+      .clubRepresentativeViewRelatedInfoOfHisClub(req.session.username)
+      .then((response) => {
+        return response.recordset[0];
+      });
+
     res.render("clubRepresentative/clubRepresentativeProfile", {
       title: "club Representative",
       username: req.session.username,
-      club: clubinfo,
-      matches: upcomingmatches,
-      stadiums: stadiumsinfo,
+      club: clubInfo,
+      matches: "",
+      stadiums: stadiums,
     });
   },
 );
