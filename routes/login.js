@@ -60,7 +60,7 @@ function routeUser(req, res) {
       res.redirect("/stadiumManager");
       break;
     case ROLE.SPORTS_ASSOCIATION_MANAGER:
-      res.redirect("/sportsAssociationManager");
+      res.redirect("/sportsManager");
       break;
     default:
       res.render("login", {

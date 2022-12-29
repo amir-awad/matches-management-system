@@ -14,19 +14,35 @@ router.get("/", authUser, authRole([ROLE.FAN]), function (req, res, next) {
   });
 });
 
+router.get(
+  "/viewMatchesWithAvailableTicketsStartingGivenDate",
+  authUser,
+  authRole([ROLE.FAN]),
+  async function (req, res, next) {
+    res.render("fan/fanViewAllMatches", {
+      title: "Fan",
+      username: req.session.username,
+      matches: "",
+    });
+  },
+);
+
 router.post(
   "/viewMatchesWithAvailableTicketsStartingGivenDate",
   authUser,
   authRole([ROLE.FAN]),
   async function (req, res, next) {
-    const date = req.body.startDate;
+    const date = req.body.date;
+    const time = req.body.time;
+    const start_time = date + " " + time;
     console.log(date, "date");
     const result =
       await fanProcedure.fanViewMatchesWithAvailableTicketsStartingGivenDate(
-        date,
+        new Date(start_time),
       );
 
-    res.render("fan/fanProfile", {
+    console.log(result, "result from view matches with available tickets");
+    res.render("fan/fanViewAllMatches", {
       title: "Fan",
       username: req.session.username,
       matches: result.recordset,
@@ -51,22 +67,26 @@ router.post(
 
     const host_club_name = req.body.host_club_name;
     const guest_club_name = req.body.guest_club_name;
-    const match_start_date = req.body.start;
+    const match_start_date = req.body.start_time;
 
     const result = await fanProcedure.fanPurchaseTicket(
       national_id,
       host_club_name,
       guest_club_name,
-      match_start_date,
+      new Date(match_start_date),
     );
-    console.log(result, "purchase ticket result");
-    if (result) {
-      toast.showToast(req, "Ticket purchased successfully");
-      res.redirect("/fan");
+
+    if (result.returnValue === 0) {
+      console.log("Ticket purchased successfully");
     } else {
-      toast.showToast(req, "Ticket not purchased");
-      res.redirect("/fan");
+      console.log("Ticket purchase failed");
     }
+
+    res.render("fan/fanViewAllMatches", {
+      title: "Fan",
+      username: req.session.username,
+      matches: "",
+    });
   },
 );
 

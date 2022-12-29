@@ -8,11 +8,43 @@ router.get(
   authUser,
   authRole([ROLE.CLUB_REPRESENTATIVE]),
   async function (req, res, next) {
+    res.render("clubRepresentative/clubRepresentativeProfile", {
+      title: "club Representative",
+      username: req.session.username,
+    });
+  },
+);
+
+router.get(
+  "/clubDetails",
+  authUser,
+  authRole([ROLE.CLUB_REPRESENTATIVE]),
+  async function (req, res, next) {
     const clubInfo = await clubRepresentativeProcedures
       .clubRepresentativeViewRelatedInfoOfHisClub(req.session.username)
       .then((response) => {
         return response.recordset[0];
       });
+
+    res.render("clubRepresentative/clubDetails", {
+      title: "club Representative",
+      username: req.session.username,
+      club: clubInfo,
+    });
+  },
+);
+
+router.get(
+  "/upcomingMatches",
+  authUser,
+  authRole([ROLE.CLUB_REPRESENTATIVE]),
+  async function (req, res, next) {
+    const clubInfo = await clubRepresentativeProcedures
+      .clubRepresentativeViewRelatedInfoOfHisClub(req.session.username)
+      .then((response) => {
+        return response.recordset[0];
+      });
+
     let upcoming_matches = await clubRepresentativeProcedures
       .clubRepresentativeViewUpcomingMatches(req.session.username)
       .then((response) => {
@@ -30,52 +62,14 @@ router.get(
     }
 
     upcoming_matches = await update_upcoming_matches();
-    res.render("clubRepresentative/clubRepresentativeProfile", {
+    res.render("clubRepresentative/upcomingMatches", {
       title: "club Representative",
       username: req.session.username,
-      club: clubInfo,
       matches: upcoming_matches,
-      stadiums: null,
+      club: clubInfo,
     });
   },
 );
-
-// router.post(
-//   "/view-upcoming-matches",
-//   authUser,
-//   authRole([ROLE.CLUB_REPRESENTATIVE]),
-//   async function (req, res, next) {
-//     const clubInfo = await clubRepresentativeProcedures
-//       .clubRepresentativeViewRelatedInfoOfHisClub(req.session.username)
-//       .then((response) => {
-//         return response.recordset[0];
-//       });
-//     let upcoming_matches = await clubRepresentativeProcedures
-//       .clubRepresentativeViewUpcomingMatches(req.session.username)
-//       .then((response) => {
-//         return response.recordset;
-//       });
-
-//     async function update_upcoming_matches() {
-//       for (let i = 0; i < upcoming_matches.length; i++) {
-//         const stadium_name = await getStadiumNameOfMatch(
-//           upcoming_matches[i].stadium_id,
-//         );
-//         upcoming_matches[i].stadium_name = stadium_name;
-//       }
-//       return upcoming_matches;
-//     }
-
-//     upcoming_matches = await update_upcoming_matches();
-//     res.render("clubRepresentative/clubRepresentativeProfile", {
-//       title: "club Representative",
-//       username: req.session.username,
-//       club: clubInfo,
-//       matches: upcoming_matches,
-//       stadiums: null,
-//     });
-//   },
-// );
 
 async function getStadiumNameOfMatch(stadium_id) {
   if (stadium_id == null) return null;
@@ -92,18 +86,13 @@ router.post(
   authUser,
   authRole([ROLE.CLUB_REPRESENTATIVE]),
   async function (req, res, next) {
-   // console.log(req.params, "req from sending request");
-
     const host_club_name = req.params.host_club_name;
     const guest_club_name = req.params.guest_club_name;
     const match_start_time = req.params.match_start_time;
     const stadium_name = req.body.stadiumName;
-    // console.log(stadium_name, "stadium name");
-    // console.log(host_club_name);
-    // console.log(guest_club_name);
-    //console.log(match_start_time);
-    const start_time = new Date(parseInt(match_start_time*1000));
-//    console.log(start_time, "start time");
+
+    const start_time = new Date(parseInt(match_start_time * 1000));
+
     const stadium_manager_name = await clubRepresentativeProcedures
       .clubRepresentativeGetStadiumManagerNameGivenStadiumName(stadium_name)
       .then((response) => {
@@ -131,8 +120,21 @@ router.post(
   },
 );
 
+router.get(
+  "/availableStadiums",
+  authUser,
+  authRole([ROLE.CLUB_REPRESENTATIVE]),
+  async function (req, res, next) {
+    res.render("clubRepresentative/availableStadiums", {
+      title: "club Representative",
+      username: req.session.username,
+      stadiums: [],
+    });
+  },
+);
+
 router.post(
-  "/view-available-stadiums",
+  "/availableStadiums",
   authUser,
   authRole([ROLE.CLUB_REPRESENTATIVE]),
   async function (req, res, next) {
@@ -149,17 +151,11 @@ router.post(
       .then((response) => {
         return response.recordset;
       });
-    const clubInfo = await clubRepresentativeProcedures
-      .clubRepresentativeViewRelatedInfoOfHisClub(req.session.username)
-      .then((response) => {
-        return response.recordset[0];
-      });
 
-    res.render("clubRepresentative/clubRepresentativeProfile", {
+    console.log(stadiums, "stadiums");
+    res.render("clubRepresentative/availableStadiums", {
       title: "club Representative",
       username: req.session.username,
-      club: clubInfo,
-      matches: "",
       stadiums: stadiums,
     });
   },

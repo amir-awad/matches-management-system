@@ -1,40 +1,54 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Fan Profile</title>
+    <title>Fan</title>
+    <!-- Add links to Bootstrap CSS and custom styles -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <h1>Welcome, <%= username %>!</h1>
+    <!-- Add a navbar with links to other pages -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Matches System</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="/fan/viewMatchesWithAvailableTicketsStartingGivenDate"
+              >View Matches</a
+            >
+          </li>
+          <!-- Add a logout button with a link to the logout route -->
+          <li class="nav-item">
+            <a class="nav-link" href="/logout"
+              ><i class="fa fa-sign-out-alt"></i> Log out</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-    <h2>Upcoming Matches</h2>
-    <form action="/fan/viewMatchesWithAvailableTicketsStartingGivenDate" method="POST">
-      <input type="text" id="date" name="startDate" required />
-      <button type="submit">View Upcoming Matches</button>
-      <% if(matches) { %>
-    <ul>
-      <% matches.forEach(function(match) { %>
-      <li>
-        <%= match.HostClub %> vs. <%= match.GuestClub %>
-        <form action="/fan/purchaseTicket" method="post">
-          <input
-            type="hidden"
-            name="host_club_name"
-            value="<%= match.HostClub %>"
-          />
-          <input
-            type="hidden"
-            name="guest_club_name"
-            value="<%= match.GuestClub %>"
-          />
-          <input type="hidden" name="start" value="<%= match.start_time %>" />
-          <button type="submit">Purchase ticket</button>
-        </form>
-      </li>
-      <% }); %>
-    </ul>
-    <% } %>
-  </form>
-    <form action="/logout" method="get">
-      <button type="submit">Logout</button>
+    <div class="container mt-5">
+      <h1>Welcome, <%= username %>!</h1>
+    </div>
   </body>
+
+  <!-- Include links to jQuery and Bootstrap JS at the end of the document for faster loading -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
 </html>

@@ -60,7 +60,7 @@ app.use("/register", registerRoute);
 app.use("/admin", adminRoute);
 app.use("/fan", fanRoute);
 app.use("/clubRepresentative", clubRepresentativeRoute);
-app.use("/sportsAssociationManager", sportsManagerRoute);
+app.use("/sportsManager", sportsManagerRoute);
 app.use("/stadiumManager", stadiumManagerRoute);
 
 app.use((req, res) => {

@@ -9,24 +9,47 @@ router.get(
   authUser,
   authRole([ROLE.STADIUM_MANAGER]),
   async function (req, res, next) {
-    const stadiumInfo = await stadiumProcedure
-      .stadiumManagerViewRelatedInfoOfHisStadium(req.session.username)
-      .then((response) => {
-        console.log(response, "response of stadium info");
-        return response.recordset[0];
-      });
-
-    const requests = await stadiumProcedure
-      .stadiumManagerViewRequestsHeReceived(req.session.username)
-      .then((response) => {
-        console.log(response, "response of requests");
-        return response.recordset;
-      });
-
     res.render("stadiumManager/stadiumManagerProfile", {
       title: "Stadium Manager",
       username: req.session.username,
+    });
+  },
+);
+
+router.get(
+  "/stadiumDetails",
+  authUser,
+  authRole([ROLE.STADIUM_MANAGER]),
+  async function (req, res, next) {
+    const stadiumInfo = await stadiumProcedure
+      .stadiumManagerViewRelatedInfoOfHisStadium(req.session.username)
+      .then((response) => {
+        return response.recordset[0];
+      });
+
+    res.render("stadiumManager/stadiumDetails", {
+      title: "Stadium Manager",
+      username: req.session.username,
       stadium: stadiumInfo,
+    });
+  },
+);
+
+router.get(
+  "/viewRequests",
+  authUser,
+  authRole([ROLE.STADIUM_MANAGER]),
+  async function (req, res, next) {
+    const requests = await stadiumProcedure
+      .stadiumManagerViewRequestsHeReceived(req.session.username)
+      .then((response) => {
+        return response.recordset;
+      });
+
+    console.log(requests, "requests in stadium manager");
+    res.render("stadiumManager/hostingRequests", {
+      title: "Stadium Manager",
+      username: req.session.username,
       requests: requests,
     });
   },

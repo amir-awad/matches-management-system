@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Club Representative</title>
-    <!-- Add links to Bootstrap CSS and custom styles -->
+    <title>Stadium Manager</title>
     <link
-      rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css"
+      rel="stylesheet"
     />
-    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Choose a color scheme for your templates -->
+    <style>
+      :root {
+        --primary-color: #00b8d4; /* for example */
+        --secondary-color: #bdbdbd; /* for example */
+      }
+    </style>
   </head>
   <body>
-    <!-- Add a navbar with links to other pages -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Matches System</a>
+      <a class="navbar-brand" href="#">Stadium Manager</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -45,13 +54,24 @@
         </ul>
       </div>
     </nav>
-
     <div class="container mt-5">
-      <h1>Welcome, <%= username %>!</h1>
+      <h4>Stadium Name: <%= stadium.stadium_name %></h4>
+      <ul class="list-group">
+        <li class="list-group-item">Stadium ID: <%= stadium.stadium_id %></li>
+        <li class="list-group-item">
+          Stadium Location: <%= stadium.stadium_location %>
+        </li>
+        <li class="list-group-item">
+          Stadium Capacity: <%= stadium.stadium_capacity %>
+        </li>
+        <li class="list-group-item">
+          Stadium Status: <%= stadium.stadium_status%>
+        </li>
+      </ul>
     </div>
   </body>
-
-  <!-- Include links to jQuery and Bootstrap JS at the end of the document for faster loading -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
 </html>
+
+<!-- Include links to jQuery and Bootstrap JS at the end of the document for faster loading -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>

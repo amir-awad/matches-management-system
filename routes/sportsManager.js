@@ -12,15 +12,24 @@ router.get(
     res.render("sportsManager/sportsManagerProfile", {
       title: "Sports Manager",
       username: req.session.username,
-      upcoming_matches: "",
-      played_matches: "",
-      never_played_clubs: "",
+    });
+  },
+);
+
+router.get(
+  "/addMatch",
+  authUser,
+  authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
+  function (req, res, next) {
+    res.render("sportsManager/addMatch", {
+      title: "Sports Manager",
+      username: req.session.username,
     });
   },
 );
 
 router.post(
-  "/add-match",
+  "/addMatch",
   authUser,
   authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
   async function (req, res, next) {
@@ -35,19 +44,36 @@ router.post(
       new Date(end_time),
     );
 
-    console.log(result, "Sports manager add match result");
-
     if (result) {
-      toast.showToast(req, "Match added successfully!");
-      res.redirect("/sportsAssociationManager");
+      res.render("sportsManager/addMatch", {
+        title: "Sports Manager",
+        username: req.session.username,
+      });
+      console.log("Match added successfully!");
     } else {
-      toast.showToast(req, "Match already exists!");
+      res.render("sportsManager/addMatch", {
+        title: "Sports Manager",
+        username: req.session.username,
+      });
+      console.log("Match can not be added!");
     }
   },
 );
 
+router.get(
+  "/deleteMatch",
+  authUser,
+  authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
+  function (req, res, next) {
+    res.render("sportsManager/deleteMatch", {
+      title: "Sports Manager",
+      username: req.session.username,
+    });
+  },
+);
+
 router.post(
-  "/delete-match",
+  "/deleteMatch",
   authUser,
   authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
   async function (req, res, next) {
@@ -63,16 +89,36 @@ router.post(
     );
 
     if (result) {
-      toast.showToast(req, "Match deleted successfully!");
-      res.redirect("/sportsAssociationManager");
+      res.render("sportsManager/deleteMatch", {
+        title: "Sports Manager",
+        username: req.session.username,
+      });
+      console.log("Match deleted successfully!");
     } else {
-      toast.showToast(req, "Match does not exist!");
+      res.render("sportsManager/deleteMatch", {
+        title: "Sports Manager",
+        username: req.session.username,
+      });
+      console.log("Match can not be deleted!");
     }
   },
 );
 
+router.get(
+  "/viewUpcomingMatches",
+  authUser,
+  authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
+  async function (req, res, next) {
+    res.render("sportsManager/viewUpcomingMatches", {
+      title: "Sports Manager",
+      username: req.session.username,
+      upcoming_matches: "",
+    });
+  },
+);
+
 router.post(
-  "/view-upcoming-matches",
+  "/viewUpcomingMatches",
   authUser,
   authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
   async function (req, res, next) {
@@ -80,22 +126,38 @@ router.post(
       await sportsManagerProcedures.sportsManagerViewUpcomingMatches();
 
     if (result) {
-      toast.showToast(req, "Matches are fetched successfully!");
-      res.render("sportsManager/sportsManagerProfile", {
+      console.log("Matches are fetched successfully!");
+      res.render("sportsManager/viewUpcomingMatches", {
         title: "Sports Manager",
         username: req.session.username,
         upcoming_matches: result.recordset,
-        played_matches: "",
-        never_played_clubs: "",
       });
     } else {
-      toast.showToast(req, "Match can not be fetched!");
+      console.log("Match can not be fetched!");
+      res.render("sportsManager/viewUpcomingMatches", {
+        title: "Sports Manager",
+        username: req.session.username,
+        upcoming_matches: "",
+      });
     }
   },
 );
 
+router.get(
+  "/viewAlreadyPlayedMatches",
+  authUser,
+  authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
+  async function (req, res, next) {
+    res.render("sportsManager/viewAlreadyPlayedMatches", {
+      title: "Sports Manager",
+      username: req.session.username,
+      played_matches: "",
+    });
+  },
+);
+
 router.post(
-  "/view-played-matches",
+  "/viewAlreadyPlayedMatches",
   authUser,
   authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
   async function (req, res, next) {
@@ -103,22 +165,38 @@ router.post(
       await sportsManagerProcedures.sportsManagerViewPlayedMatches();
 
     if (result) {
-      toast.showToast(req, "Matches are fetched successfully!");
-      res.render("sportsManager/sportsManagerProfile", {
+      console.log("Matches are fetched successfully!");
+      res.render("sportsManager/viewAlreadyPlayedMatches", {
         title: "Sports Manager",
         username: req.session.username,
-        upcoming_matches: "",
         played_matches: result.recordset,
-        never_played_clubs: "",
       });
     } else {
-      toast.showToast(req, "Match can not be fetched!");
+      console.log("Match can not be fetched!");
+      res.render("sportsManager/viewAlreadyPlayedMatches", {
+        title: "Sports Manager",
+        username: req.session.username,
+        played_matches: "",
+      });
     }
   },
 );
 
+router.get(
+  "/viewNeverPlayedClubs",
+  authUser,
+  authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
+  async function (req, res, next) {
+    res.render("sportsManager/viewNeverPlayedClubs", {
+      title: "Sports Manager",
+      username: req.session.username,
+      never_played_clubs: "",
+    });
+  },
+);
+
 router.post(
-  "/view-never-played-clubs",
+  "/viewNeverPlayedClubs",
   authUser,
   authRole([ROLE.SPORTS_ASSOCIATION_MANAGER]),
   async function (req, res, next) {
@@ -127,16 +205,19 @@ router.post(
     );
 
     if (result) {
-      toast.showToast(req, "Matches are fetched successfully!");
-      res.render("sportsManager/sportsManagerProfile", {
+      console.log("CLubs are fetched successfully!");
+      res.render("sportsManager/viewNeverPlayedClubs", {
         title: "Sports Manager",
         username: req.session.username,
-        upcoming_matches: "",
-        played_matches: "",
         never_played_clubs: result.recordset,
       });
     } else {
-      toast.showToast(req, "Match can not be fetched!");
+      console.log("Club can not be fetched!");
+      res.render("sportsManager/viewNeverPlayedClubs", {
+        title: "Sports Manager",
+        username: req.session.username,
+        never_played_clubs: "",
+      });
     }
   },
 );

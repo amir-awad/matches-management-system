@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Sports Manager</title>
+  </head>
+  <body>
+    <h2>View already played matches</h2>
+
+    <% if(played_matches) { %>
+    <ul>
+      <% played_matches.forEach(function(match) { %>
+      <p>Host Club Name:</p>
+      <li><%= match.host_club_name %></li>
+      <p>Guest Club Name:</p>
+      <li><%= match.guest_club_name %></li>
+      <p>Match Start Time:</p>
+      <li><%= match.start_time %></li>
+      <p>Match End Time:</p>
+      <li><%= match.end_time %></li>
+      <% }); %>
+    </ul>
+    <% } %>
+
+    <form action="/logout" method="get">
+      <button type="submit">Logout</button>
+    </form>
+  </body>
+</html>

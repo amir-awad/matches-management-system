@@ -45,38 +45,58 @@
   </div>
 </nav>
 
-<!-- Welcome the user and display their username -->
+<!-- Display a form to add a new stadium to the database -->
 <div class="container mt-5">
-  <h1>Welcome, <%= username %>!</h1>
-
-  <!-- Add some icon customization to the buttons -->
-  <form action="/admin/addClub" method="get">
+  <h3>Add a new stadium</h3>
+  <form action="/admin/addStadium" method="POST">
+    <!-- Add some customization to the form fields -->
+    <div class="form-group">
+      <label for="stadiumName">Stadium Name</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa fa-stadium"></i></span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          name="stadiumName"
+          placeholder="Enter stadium name"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="stadiumLocation">Stadium Location</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"
+            ><i class="fa fa-map-marker-alt"></i
+          ></span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          name="stadiumLocation"
+          placeholder="Enter stadium location"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="stadiumCapacity">Stadium Capacity</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa fa-users"></i></span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          name="stadiumCapacity"
+          placeholder="Enter stadium capacity"
+        />
+      </div>
+    </div>
+    <!-- Add some customization to the submit button -->
     <button type="submit" class="btn btn-primary">
-      <i class="fa fa-plus"></i> Add Club
-    </button>
-  </form>
-
-  <form action="/admin/deleteCLub" method="get">
-    <button type="submit" class="btn btn-danger">
-      <i class="fa fa-trash"></i> Delete Club
-    </button>
-  </form>
-
-  <form action="/admin/addStadium" method="get">
-    <button type="submit" class="btn btn-primary">
-      <i class="fa fa-plus"></i> Add Stadium
-    </button>
-  </form>
-
-  <form action="/admin/deleteStadium" method="get">
-    <button type="submit" class="btn btn-danger">
-      <i class="fa fa-trash"></i> Delete Stadium
-    </button>
-  </form>
-
-  <form action="/admin/blockFan" method="get">
-    <button type="submit" class="btn btn-warning">
-      <i class="fa fa-ban"></i> Block Fan
+      <i class="fa fa-plus"></i> Add
     </button>
   </form>
 

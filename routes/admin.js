@@ -16,6 +16,18 @@ router.get(
   },
 );
 
+router.get(
+  "/addClub",
+  authUser,
+  authRole([ROLE.SYSTEM_ADMIN]),
+  function (req, res, next) {
+    res.render("admin/addClub", {
+      title: "Add Club",
+      username: req.session.username,
+    });
+  },
+);
+
 router.post(
   "/addClub",
   authUser,
@@ -25,14 +37,32 @@ router.post(
     const c_location = req.body.clubLocation;
     const result = await adminProcedures.adminAddNewClub(name, c_location);
     if (result) {
-      // toast.showToast(req, "Club added successfully");
-      res.redirect("/admin");
+      res.render("admin/addClub", {
+        title: "Add Club",
+        username: req.session.username,
+      });
+      console.log("Club added successfully!");
     } else {
-      toast.showToast(req, "Club already exists");
-      // res.redirect("/admin/addClub");
+      res.render("admin/addClub", {
+        title: "Add Club",
+        username: req.session.username,
+      });
+      console.log("Club Already Exists!");
     }
 
     req.session.type = 0;
+  },
+);
+
+router.get(
+  "/deleteClub",
+  authUser,
+  authRole([ROLE.SYSTEM_ADMIN]),
+  function (req, res, next) {
+    res.render("admin/deleteClub", {
+      title: "Delete Club",
+      username: req.session.username,
+    });
   },
 );
 
@@ -45,13 +75,31 @@ router.post(
     console.log(name, "club name to delete");
     const result = await adminProcedures.adminDeleteClub(name);
     if (result) {
-      // toast.showToast(req, "Club deleted successfully");
-      res.redirect("/admin");
+      res.render("admin/deleteClub", {
+        title: "Delete Club",
+        username: req.session.username,
+      });
+      console.log("Club deleted successfully!");
     } else {
-      toast.showToast(req, "Club does not exist");
-      // res.redirect("/admin/deleteClub");
+      res.render("admin/deleteClub", {
+        title: "Delete Club",
+        username: req.session.username,
+      });
+      console.log("Club does not exist!");
     }
     req.session.type = 0;
+  },
+);
+
+router.get(
+  "/addStadium",
+  authUser,
+  authRole([ROLE.SYSTEM_ADMIN]),
+  function (req, res, next) {
+    res.render("admin/addStadium", {
+      title: "Add Stadium",
+      username: req.session.username,
+    });
   },
 );
 
@@ -69,13 +117,31 @@ router.post(
       capacity,
     );
     if (result) {
-      toast.showToast(req, "Stadium added successfully");
-      res.redirect("/admin");
+      res.render("admin/addStadium", {
+        title: "Add Stadium",
+        username: req.session.username,
+      });
+      console.log("Stadium added successfully!");
     } else {
-      toast.showToast(req, "Stadium already exists");
-      // res.redirect("/admin/addStadium");
+      res.render("admin/addStadium", {
+        title: "Add Stadium",
+        username: req.session.username,
+      });
+      console.log("Stadium Already Exists!");
     }
     req.session.type = 0;
+  },
+);
+
+router.get(
+  "/deleteStadium",
+  authUser,
+  authRole([ROLE.SYSTEM_ADMIN]),
+  function (req, res, next) {
+    res.render("admin/deleteStadium", {
+      title: "Delete Stadium",
+      username: req.session.username,
+    });
   },
 );
 
@@ -87,13 +153,31 @@ router.post(
     const name = req.body.stadiumName;
     const result = await adminProcedures.adminDeleteStadium(name);
     if (result) {
-      toast.showToast(req, "Stadium deleted successfully");
-      res.redirect("/admin");
+      res.render("admin/deleteStadium", {
+        title: "Delete Stadium",
+        username: req.session.username,
+      });
+      console.log("Stadium deleted successfully!");
     } else {
-      toast.showToast(req, "Stadium does not exist");
-      // res.redirect("/admin/deleteStadium");
+      res.render("admin/deleteStadium", {
+        title: "Delete Stadium",
+        username: req.session.username,
+      });
+      console.log("Stadium does not exist!");
     }
     req.session.type = 0;
+  },
+);
+
+router.get(
+  "/blockFan",
+  authUser,
+  authRole([ROLE.SYSTEM_ADMIN]),
+  function (req, res, next) {
+    res.render("admin/blockFan", {
+      title: "Block Fan",
+      username: req.session.username,
+    });
   },
 );
 
@@ -105,11 +189,17 @@ router.post(
     const national_id = req.body.fanNationalId;
     const result = await adminProcedures.adminBlockFan(national_id);
     if (result) {
-      toast.showToast(req, "Fan blocked successfully");
-      res.redirect("/admin");
+      res.render("admin/blockFan", {
+        title: "Block Fan",
+        username: req.session.username,
+      });
+      console.log("Fan blocked successfully!");
     } else {
-      toast.showToast(req, "Fan does not exist");
-      // res.redirect("/admin/blockFan");
+      res.render("admin/blockFan", {
+        title: "Block Fan",
+        username: req.session.username,
+      });
+      console.log("Fan does not exist!");
     }
     req.session.type = 0;
   },

@@ -31,7 +31,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
         <a class="nav-link" href="#">Home</a>
       </li>
@@ -45,45 +45,35 @@
   </div>
 </nav>
 
-<!-- Welcome the user and display their username -->
+<!-- Display a form to delete a club from the system -->
 <div class="container mt-5">
-  <h1>Welcome, <%= username %>!</h1>
-
-  <!-- Add some icon customization to the buttons -->
-  <form action="/admin/addClub" method="get">
+  <h3>Delete a club</h3>
+  <form action="/admin/deleteClub" method="POST">
+    <!-- Add some customization to the form fields -->
+    <div class="form-group">
+      <label for="clubName">Club Name</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa fa-futbol"></i></span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          name="clubName"
+          placeholder="Enter club name"
+        />
+      </div>
+    </div>
+    <!-- Add some customization to the submit button -->
     <button type="submit" class="btn btn-primary">
-      <i class="fa fa-plus"></i> Add Club
-    </button>
-  </form>
-
-  <form action="/admin/deleteCLub" method="get">
-    <button type="submit" class="btn btn-danger">
-      <i class="fa fa-trash"></i> Delete Club
-    </button>
-  </form>
-
-  <form action="/admin/addStadium" method="get">
-    <button type="submit" class="btn btn-primary">
-      <i class="fa fa-plus"></i> Add Stadium
-    </button>
-  </form>
-
-  <form action="/admin/deleteStadium" method="get">
-    <button type="submit" class="btn btn-danger">
-      <i class="fa fa-trash"></i> Delete Stadium
-    </button>
-  </form>
-
-  <form action="/admin/blockFan" method="get">
-    <button type="submit" class="btn btn-warning">
-      <i class="fa fa-ban"></i> Block Fan
+      <i class="fa fa-trash"></i> Delete
     </button>
   </form>
 
   <!-- Add a logout button with a link to the logout route -->
   <form action="/logout" method="get">
     <button type="submit" class="btn btn-secondary">
-      <i class="fa fa-sign-out-alt"></i> Logout
+      <i class="fa fa-sign-out-alt"></i> Log out
     </button>
   </form>
 </div>

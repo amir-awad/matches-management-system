@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Club Representative</title>
+    <!-- Add links to Bootstrap CSS and custom styles -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <!-- Add a navbar with links to other pages -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Matches System</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/clubRepresentative/clubDetails"
+              >Club Details</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/clubRepresentative/upcomingMatches"
+              >Upcoming Matches</a
+            >
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/clubRepresentative/availableStadiums"
+              >Available Stadiums</a
+            >
+          </li>
+          <!-- Add a logout button with a link to the logout route -->
+          <li class="nav-item">
+            <a class="nav-link" href="/logout"
+              ><i class="fa fa-sign-out-alt"></i> Log out</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+      <!-- Use a Bootstrap form for the date and time inputs -->
+      <form
+        action="/clubRepresentative/availableStadiums"
+        method="POST"
+        class="form-inline"
+      >
+        <div class="form-group mr-2">
+          <label for="date" class="sr-only">Date</label>
+          <input
+            type="text"
+            id="date"
+            name="date"
+            required
+            class="form-control"
+            placeholder="Date (YYYY-MM-DD)"
+          />
+        </div>
+        <div class="form-group mr-2">
+          <label for="time" class="sr-only">Time</label>
+          <input
+            type="text"
+            id="time"
+            name="time"
+            required
+            class="form-control"
+            placeholder="Time (HH:MM)"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+      <div class="row mt-5">
+        <div class="col">
+          <h2>Available Stadiums</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Stadium Name</th>
+                <th scope="col">Location</th>
+                <th scope="col">Capacity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Loop through the available stadiums and display them in a table -->
+              <% for (let stadium of stadiums) { %>
+              <tr>
+                <td><%= stadium.stadium_name %></td>
+                <td><%= stadium.stadium_location %></td>
+                <td><%= stadium.stadium_capacity %></td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

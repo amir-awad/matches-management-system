@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Sports Manager</title>
+  </head>
+  <body>
+    <h2>View pair of club names who never scheduled to play with each other</h2>
+    <% if(never_played_clubs) { %>
+    <ul>
+      <% never_played_clubs.forEach(function(club) { %> <% if(club) { %>
+      <li><%= club.host_club_name %> vs. <%= club.guest_club_name %></li>
+      <% } %> <% }); %>
+    </ul>
+    <% } %>
+    <form action="/logout" method="get">
+      <button type="submit">Logout</button>
+    </form>
+  </body>
+</html>
