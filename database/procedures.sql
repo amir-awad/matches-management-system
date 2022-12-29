@@ -216,7 +216,7 @@ where stadium_manager_id = @mang_id
 declare @req_id int
 select @req_id= h.request_id
 from host_request h
-where @mang_id = h.manager_id AND @m_id = h.match_id and h.request_status = 'unhandled'
+where @mang_id = h.manager_id AND @m_id = h.match_id and h.request_status = 'pending'
 update host_request 
 set request_status = 'accepted'
 where request_id = @req_id

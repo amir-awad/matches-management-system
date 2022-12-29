@@ -42,14 +42,15 @@ router.post(
     const host_club_name = req.params.host_club_name;
     const guest_club_name = req.params.guest_club_name;
     const match_start_time = req.params.match_start_time;
-    const representative_name = req.params.representative_name;
+    // const representative_name = req.params.representative_name;
     // console.log(representative_name, "name");
     // console.log(host_club_name);
     // console.log(guest_club_name);
     // console.log(match_start_time);
     const start_time = new Date(parseInt(match_start_time*1000));
+    console.log(start_time);
     const result = await stadiumProcedure
-      .stadiumManagerAcceptRequest(representative_name,host_club_name,guest_club_name,start_time)
+      .stadiumManagerAcceptRequest(req.session.username,host_club_name,guest_club_name,start_time)
       .then((response) => {
         return response.returnValue;
       });
