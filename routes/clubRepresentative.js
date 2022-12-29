@@ -98,12 +98,12 @@ router.post(
     const guest_club_name = req.params.guest_club_name;
     const match_start_time = req.params.match_start_time;
     const stadium_name = req.body.stadiumName;
-    console.log(stadium_name, "stadium name");
-    console.log(host_club_name);
-    console.log(guest_club_name);
+    // console.log(stadium_name, "stadium name");
+    // console.log(host_club_name);
+    // console.log(guest_club_name);
     //console.log(match_start_time);
     const start_time = new Date(parseInt(match_start_time*1000));
-    console.log(start_time, "start time");
+//    console.log(start_time, "start time");
     const stadium_manager_name = await clubRepresentativeProcedures
       .clubRepresentativeGetStadiumManagerNameGivenStadiumName(stadium_name)
       .then((response) => {

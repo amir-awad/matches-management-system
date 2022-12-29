@@ -42,6 +42,7 @@ const stadiumManagerAcceptRequest = async (
   request.input("host_club_name", sql.VarChar, host_club_name);
   request.input("guest_club_name", sql.VarChar, guest_club_name);
   request.input("start", sql.DateTime, match_start_date);
+  console.log("==================");
   const result = await request.execute("StadiumManagerAcceptRequest");
   return result;
 };

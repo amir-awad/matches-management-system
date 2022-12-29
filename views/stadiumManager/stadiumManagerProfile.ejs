@@ -17,6 +17,20 @@
     <hr>
 
     <h2>Requests</h2>
+    <% for(let i=0; i< requests.length; i++) { %>
+      <li>
+        Representative Name: <%= requests[i].representative_name %> <br>
+        <%= requests[i].club_name[0] %> vs. <%= requests[i].club_name[1] %> <br>
+       start time: <%= requests[i].start_time %> <br>
+       end time: <%= requests[i].end_time%>
+          <form action= "/stadiumManager/acceptRequest/<%= requests[i].representative_name %>/<%= requests[i].club_name[0] %>/<%= requests[i].club_name[1] %>/<%= Date.parse(requests[i].start_time) / 1000 %>" method="POST" id="sendRequestForm">
+            <button type="submit" >Accept Request</button>
+          </form>
+          <form action= "/clubRepresentative/sendRequest/" method="POST" id="sendRequestForm">
+            <button type="submit" >Reject Request</button>
+          </form>
+      </li>
+   <% } %>
 
     <hr>
 
