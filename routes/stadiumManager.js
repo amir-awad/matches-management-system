@@ -33,18 +33,14 @@ router.get(
 );
 
 router.post(
-  "/acceptrequest/:representative_name/:host_club_name/:guest_club_name/:match_start_time",
+  "/acceptRequest/:representative_name/:host_club_name/:guest_club_name/:match_start_time",
   authUser,
   authRole([ROLE.STADIUM_MANAGER]),
   async function (req, res, next) {
     const host_club_name = req.params.host_club_name;
     const guest_club_name = req.params.guest_club_name;
     const match_start_time = req.params.match_start_time;
-    // const representative_name = req.params.representative_name;
-    // console.log(representative_name, "name");
-    // console.log(host_club_name);
-    // console.log(guest_club_name);
-    // console.log(match_start_time);
+
     const start_time = new Date(parseInt(match_start_time * 1000));
     console.log(start_time);
     const result = await stadiumProcedure
@@ -65,7 +61,7 @@ router.post(
 );
 
 router.post(
-  "/rejectrequest/:representative_name/:host_club_name/:guest_club_name/:match_start_time",
+  "/rejectRequest/:representative_name/:host_club_name/:guest_club_name/:match_start_time",
   authUser,
   authRole([ROLE.STADIUM_MANAGER]),
   async function (req, res, next) {
