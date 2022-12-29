@@ -4,15 +4,35 @@ const fanProcedure = require("../procedures/fanProcedures");
 const toast = require("../utilities/toast");
 const { authUser, authRole, ROLE } = require("../utilities/auth");
 
-router.get("/", authUser, authRole([ROLE.FAN]), function (req, res, next) {
-  console.log("----------");
+router.get(
+  "/",
+  authUser,
+  authRole([ROLE.FAN]),
+  async function (req, res, next) {
+    console.log("----------");
 
-  res.render("fan/fanProfile", {
-    title: "Fan",
-    username: req.session.username,
-    matches: "",
-  });
-});
+    const isBlocked = await checkIfFanIsBlocked(req.session.username).then(
+      (result) => {
+        return result;
+      },
+    );
+
+    if (isBlocked) {
+      res.redirect("/logout");
+    } else {
+      res.render("fan/fanProfile", {
+        title: "Fan",
+        username: req.session.username,
+        matches: "",
+      });
+    }
+  },
+);
+
+async function checkIfFanIsBlocked(username) {
+  const result = await fanProcedure.fanGetStatus(username);
+  return result;
+}
 
 router.get(
   "/viewMatchesWithAvailableTicketsStartingGivenDate",
