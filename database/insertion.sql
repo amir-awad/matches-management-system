@@ -66,7 +66,13 @@ VALUES
 INSERT INTO match
     (start_time, end_time, host_club_id, guest_club_id, stadium_id)
 VALUES
-    ('2023-01-01 12:00:00', ' 2023-01-01 13:00:00', 2, 3, NULL)
+    ('2024-01-01 12:00:00', ' 2024-01-01 13:00:00', 2, 3, NULL)
+INSERT INTO match
+    (start_time, end_time, host_club_id, guest_club_id, stadium_id)
+VALUES
+    ('2025-01-01 12:00:00', '2025-01-01 13:00:00', 1, 4, NULL)
+
+
 
 
 INSERT INTO ticket

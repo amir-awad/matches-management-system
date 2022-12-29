@@ -16,27 +16,26 @@
 
     <hr>
 
-
     <h2>Upcoming Matches</h2>
-    <form action="/clubRepresentative/view-upcoming-matches" method="POST">
+    <!-- <form action="/clubRepresentative/view-upcoming-matches" method="POST"> -->
     <ul>
       <% for(let i=0; i< matches.length; i++) { %>
         <li>
           <%= matches[i].club_name[0] %> vs. <%= matches[i].club_name[1] %> <br> start time: <%= matches[i].start_time %> <br> end time: <%= matches[i].end_time%>
           <% if(matches[i].stadium_name) { %>
             <br> stadium: <%= matches[i].stadium_name %>
-          <% } else{ %>  
+          <% } else if(club.club_name === matches[i].club_name[0]) { %>
             <br>
-            <% var x= "/clubRepresentative/sendRequest" +i %>
-            <form action= <%= x %> method="POST">
-              <button type="submit">Send Request to Stadium <%= i %> </button>
-            </form> 
+            <form action= "/clubRepresentative/sendRequest/<%= matches[i].club_name[0] %>/<%= matches[i].club_name[1] %>/<%= Date.parse(matches[i].start_time) / 1000 %>" method="POST" id="sendRequestForm">
+              <input type="text" id="stadium_name" name="stadiumName" required/>
+              <button type="submit" >Send hosting request to the entered stadium. </button>
+            </form>
           <% } %>
         </li>
      <% } %>
     </ul>
-    <button type="submit">View Upcoming Matches</button>
-    </form>
+    <!-- <button type="submit">View Upcoming Matches</button> -->
+    <!-- </form> -->
     <hr>
 
     <h2>Available Stadiums</h2>

@@ -15,7 +15,7 @@ const stadiumManagerRegister = async (
   return result;
 };
 
-const   stadiumManagerViewRelatedInfoOfHisStadium = async (username) => {
+const stadiumManagerViewRelatedInfoOfHisStadium = async (username) => {
   const request = new sql.Request();
   request.input("username", sql.VarChar, username);
   const result = await request.execute(

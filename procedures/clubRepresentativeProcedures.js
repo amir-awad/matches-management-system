@@ -69,8 +69,23 @@ const clubRepresentativeSendRequestToStadiumManager = async (
   request.input("host_club_name", sql.VarChar, host_club_name);
   request.input("guest_club_name", sql.VarChar, guest_club_name);
   request.input("start", sql.DateTime, match_start_date);
+  request.output("success", sql.Bit);
   const result = await request.execute(
     "ClubRepresentativeSendRequestToStadiumManager",
+  );
+
+  console.log(result,"result from ClubRepresentativeSendRequestToStadiumManager");
+
+  return result.output.success;
+};
+
+const clubRepresentativeGetStadiumManagerNameGivenStadiumName = async (
+  stadium_name,
+) => {
+  const request = new sql.Request();
+  request.input("stadium_name", sql.VarChar, stadium_name);
+  const result = await request.execute(
+    "ClubRepresentativeGetStadiumManagerNameGivenStadiumName",
   );
   return result;
 };
@@ -82,4 +97,5 @@ module.exports = {
   clubRepresentativeGetStadiumNameOfMatch,
   clubRepresentativeViewAvailableStadiumsStartingAtCertainDate,
   clubRepresentativeSendRequestToStadiumManager,
+  clubRepresentativeGetStadiumManagerNameGivenStadiumName,
 };

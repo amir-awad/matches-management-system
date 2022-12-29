@@ -335,9 +335,9 @@ AS
 SELECT S.stadium_name, S.stadium_location, S.stadium_capacity
 FROM stadium S
 WHERE S.stadium_id NOT IN (
-    SELECT m.stadium_id 
-    FROM match m 
-    WHERE m.start_time >= @date AND m.stadium_id IS NOT NULL
+    SELECT m.stadium_id
+FROM match m
+WHERE m.start_time >= @date AND m.stadium_id IS NOT NULL
 )
 go
 
@@ -347,7 +347,8 @@ CREATE PROCEDURE ClubRepresentativeSendRequestToStadiumManager
     @stadium_mang varchar(20),
     @host_club_name varchar(20),
     @guest_club_name varchar(20),
-    @start datetime
+    @start datetime,
+    @success bit output
 AS
 declare @mang_id int, @h_id int, @g_id int, @m_id int,@s_id int
 
@@ -371,12 +372,28 @@ from host_request
 where match_id = @m_id and manager_id = @mang_id)
 begin
     INSERT INTO host_request
-    VALUES(@m_id, @mang_id, @s_id, 'pending')
+        (representative_id, manager_id, match_id, request_status)
+    VALUES
+        ((SELECT representative_id
+            FROM club_representative
+            WHERE username = @username), @mang_id, @m_id, 'pending')
+    set @success = 1
 end
 else
 begin
-    RAISERROR('Request already sent', 16, 1)
+    set @success = 0
 end
+go
+
+-- Get the stadium manager name given the stadium name
+CREATE PROCEDURE ClubRepresentativeGetStadiumManagerNameGivenStadiumName
+    @stadium_name varchar(20)
+AS
+SELECT stadium_manager_name
+FROM stadium_manager
+WHERE stadium_id = (SELECT stadium_id
+FROM stadium
+WHERE stadium_name = @stadium_name)
 go
 
 
