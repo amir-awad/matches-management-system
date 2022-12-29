@@ -166,7 +166,7 @@ FROM host_request
     INNER JOIN club C2 ON match.guest_club_id = C2.club_id
 WHERE host_request.manager_id = (SELECT stadium_manager_id
 FROM stadium_manager
-WHERE username = @username)
+WHERE username = @username) AND host_request.request_status = 'pending'
 go
 
 CREATE PROCEDURE addticket
