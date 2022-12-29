@@ -151,6 +151,7 @@ async function removeClubsFromNeverPlayedMatches(never_played_clubs) {
     never_played_clubs.recordset,
     "never played clubs before removing",
   );
+  
 
   for (let i = 0; i < never_played_clubs.recordset.length; i++) {
     for (let j = 0; j < upcoming_matches.recordset.length; j++) {

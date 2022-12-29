@@ -92,17 +92,18 @@ router.post(
   authUser,
   authRole([ROLE.CLUB_REPRESENTATIVE]),
   async function (req, res, next) {
-    console.log(req.params, req.body, "req from sending request");
+   // console.log(req.params, "req from sending request");
 
-    const host_club_name = req.params["host.club_name"];
-    const guest_club_name = req.params["guest.club_name"];
-    const match_start_time = req.params["match_start_time"];
+    const host_club_name = req.params.host_club_name;
+    const guest_club_name = req.params.guest_club_name;
+    const match_start_time = req.params.match_start_time;
     const stadium_name = req.body.stadiumName;
     console.log(stadium_name, "stadium name");
-
-    const start_time = new Date(parseInt(match_start_time));
+    console.log(host_club_name);
+    console.log(guest_club_name);
+    //console.log(match_start_time);
+    const start_time = new Date(parseInt(match_start_time*1000));
     console.log(start_time, "start time");
-
     const stadium_manager_name = await clubRepresentativeProcedures
       .clubRepresentativeGetStadiumManagerNameGivenStadiumName(stadium_name)
       .then((response) => {
