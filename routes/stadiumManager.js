@@ -23,7 +23,6 @@ router.get(
         return response.recordset;
       });
 
-
     res.render("stadiumManager/stadiumManagerProfile", {
       title: "Stadium Manager",
       username: req.session.username,
@@ -32,7 +31,6 @@ router.get(
     });
   },
 );
-
 
 router.post(
   "/acceptrequest/:representative_name/:host_club_name/:guest_club_name/:match_start_time",
@@ -47,16 +45,21 @@ router.post(
     // console.log(host_club_name);
     // console.log(guest_club_name);
     // console.log(match_start_time);
-    const start_time = new Date(parseInt(match_start_time*1000));
+    const start_time = new Date(parseInt(match_start_time * 1000));
     console.log(start_time);
     const result = await stadiumProcedure
-      .stadiumManagerAcceptRequest(req.session.username,host_club_name,guest_club_name,start_time)
+      .stadiumManagerAcceptRequest(
+        req.session.username,
+        host_club_name,
+        guest_club_name,
+        start_time,
+      )
       .then((response) => {
         return response.returnValue;
       });
-      if(result==0){
-        console.log("done")
-      }
+    if (result == 0) {
+      console.log("done");
+    }
     res.redirect("/stadiumManager");
   },
 );
@@ -74,16 +77,21 @@ router.post(
     // console.log(host_club_name);
     // console.log(guest_club_name);
     // console.log(match_start_time);
-    const start_time = new Date(parseInt(match_start_time*1000));
+    const start_time = new Date(parseInt(match_start_time * 1000));
     console.log(start_time);
     const result = await stadiumProcedure
-      .stadiumManagerRejectRequest(req.session.username,host_club_name,guest_club_name,start_time)
+      .stadiumManagerRejectRequest(
+        req.session.username,
+        host_club_name,
+        guest_club_name,
+        start_time,
+      )
       .then((response) => {
         return response.returnValue;
       });
-      if(result==0){
-        console.log("done")
-      }
+    if (result == 0) {
+      console.log("done");
+    }
     res.redirect("/stadiumManager");
   },
 );
