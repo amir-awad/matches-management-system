@@ -79,7 +79,7 @@ router.post(
     if (result == 0) {
       console.log("done");
     }
-    res.redirect("/stadiumManager");
+    res.redirect("/stadiumManager/viewRequests");
   },
 );
 

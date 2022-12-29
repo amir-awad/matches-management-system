@@ -87,7 +87,7 @@
                     </button>
                   </form>
                   <form
-                    action="/stadiumManager/rejectRequest/<%= requests[i].representative_name %>/<%= requests[i].club_name[0] %>/<%= requests[i].club_name[1] %>/<%= Date.parse(requests[i].start_time) / 1000 %>"
+                    action="/stadiumManager/rejectRequest/<%= request.representative_name %>/<%= request.club_name[0] %>/<%= request.club_name[1] %>/<%= Date.parse(request.start_time) / 1000 %>"
                     method="POST"
                   >
                     <input

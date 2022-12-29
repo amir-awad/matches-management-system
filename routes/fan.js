@@ -68,14 +68,17 @@ router.post(
     const host_club_name = req.body.host_club_name;
     const guest_club_name = req.body.guest_club_name;
     const match_start_date = req.body.start_time;
-
+console.log("hereee------");
+    console.log(host_club_name);
+    console.log(guest_club_name);
+    console.log(match_start_date);
     const result = await fanProcedure.fanPurchaseTicket(
       national_id,
       host_club_name,
       guest_club_name,
       new Date(match_start_date),
     );
-
+    console.log(result);
     if (result.returnValue === 0) {
       console.log("Ticket purchased successfully");
     } else {

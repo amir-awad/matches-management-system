@@ -102,6 +102,18 @@
                     method="POST"
                     class="form-inline"
                   >
+                  <input
+                      type="hidden"
+                      id="host_club_name"
+                      name="host_club_name"
+                      value="<%= matches[i].HostClub %>"
+                    />
+                    <input
+                      type="hidden"
+                      id="guest_club_name"
+                      name="guest_club_name"
+                      value="<%= matches[i].GuestClub %>"
+                    />
                     <input
                       type="hidden"
                       id="match_start_time"
