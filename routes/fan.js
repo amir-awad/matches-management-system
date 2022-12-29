@@ -7,35 +7,29 @@ const { authUser, authRole, ROLE } = require("../utilities/auth");
 router.get("/", authUser, authRole([ROLE.FAN]), function (req, res, next) {
   console.log("----------");
 
-  fanProcedure
-    .fanViewMatchesWithAvailableTicketsStartingGivenDate(
-      "2020-01-01 12:00:00.000",
-    )
-    .then((response) => {
-      console.log(response, "response");
-      const matches = response.recordset;
-      res.render("fan/fanProfile", {
-        title: "Fan",
-        username: req.session.username,
-        matches: matches,
-      });
-    });
+  res.render("fan/fanProfile", {
+    title: "Fan",
+    username: req.session.username,
+    matches: "",
+  });
 });
 
-router.get(
-  "/fanViewMatchesWithAvailableTicketsStartingGivenDate",
+router.post(
+  "/viewMatchesWithAvailableTicketsStartingGivenDate",
   authUser,
   authRole([ROLE.FAN]),
   async function (req, res, next) {
-    const { date } = req.body;
+    const date = req.body.startDate;
+    console.log(date, "date");
     const result =
       await fanProcedure.fanViewMatchesWithAvailableTicketsStartingGivenDate(
         date,
       );
-    res.render("fan/fanViewMatchesWithAvailableTicketsStartingGivenDate", {
+
+    res.render("fan/fanProfile", {
       title: "Fan",
       username: req.session.username,
-      result,
+      matches: result.recordset,
     });
   },
 );
@@ -45,7 +39,7 @@ router.post(
   authUser,
   authRole([ROLE.FAN]),
   async function (req, res, next) {
-    console.log(req.body, "req.body");
+    console.log(req.body, "req.body from purchase ticket");
 
     let national_id = "";
     await fanProcedure

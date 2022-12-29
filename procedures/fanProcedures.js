@@ -24,7 +24,7 @@ const fanRegister = async (
 const fanViewMatchesWithAvailableTicketsStartingGivenDate = async (date) => {
   console.log("here");
   const request = new sql.Request();
-  request.input("date", sql.VarChar, date);
+  request.input("date", sql.DateTime, date);
   const result = await request.execute(
     "FanViewMatchesWithAvailableTicketsStartingGivenDate",
   );

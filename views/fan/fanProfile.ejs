@@ -7,6 +7,10 @@
     <h1>Welcome, <%= username %>!</h1>
 
     <h2>Upcoming Matches</h2>
+    <form action="/fan/viewMatchesWithAvailableTicketsStartingGivenDate" method="POST">
+      <input type="text" id="date" name="startDate" required />
+      <button type="submit">View Upcoming Matches</button>
+      <% if(matches) { %>
     <ul>
       <% matches.forEach(function(match) { %>
       <li>
@@ -28,6 +32,8 @@
       </li>
       <% }); %>
     </ul>
+    <% } %>
+  </form>
     <form action="/logout" method="get">
       <button type="submit">Logout</button>
   </body>
