@@ -570,6 +570,16 @@ UPDATE fan SET fan_status = 0 WHERE national_id=@national_id;
 
 go
 
+CREATE PROCEDURE GetFanStatusUsingUsername
+    @username varchar(20),
+    @status INT OUTPUT
+AS
+SET @status = (SELECT fan_status
+FROM fan
+WHERE username=@username)
+go
+
+
 
 CREATE PROCEDURE Login
     @username varchar(20),

@@ -21,6 +21,19 @@ const fanRegister = async (
   return result;
 };
 
+const fanGetStatus = async (username) => {
+  const request = new sql.Request();
+  request.input("username", sql.VarChar, username);
+  request.output("status", sql.Bit);
+  const result = await request.execute("GetFanStatusUsingUsername");
+  console.log(result.output.status, "status");
+  if (result.output.status === false) {
+    return true; // is blocked
+  }
+  return false;
+};
+
+
 const fanViewMatchesWithAvailableTicketsStartingGivenDate = async (date) => {
   console.log("here");
   const request = new sql.Request();
@@ -61,4 +74,5 @@ module.exports = {
   fanViewMatchesWithAvailableTicketsStartingGivenDate,
   fanPurchaseTicket,
   fanNationalIdFinder,
+  fanGetStatus,
 };
