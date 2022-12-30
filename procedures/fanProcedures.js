@@ -33,6 +33,7 @@ const fanGetStatus = async (username) => {
   return false;
 };
 
+
 const fanViewMatchesWithAvailableTicketsStartingGivenDate = async (date) => {
   console.log("here");
   const request = new sql.Request();
